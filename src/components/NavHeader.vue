@@ -12,7 +12,25 @@
             <a href="javascript:;">MIUI</a>
           </li>
           <li>
+            <a href="javascript:;">IoT</a>
+          </li>
+          <li>
             <a href="javascript:;">云服务</a>
+          </li>
+          <li>
+            <a href="javascript:;">金融</a>
+          </li>
+          <li>
+            <a href="javascript:;">有品</a>
+          </li>
+          <li>
+            <a href="javascript:;">小爱开放平台</a>
+          </li>
+          <li>
+            <a href="javascript:;">企业团购</a>
+          </li>
+          <li>
+            <a href="javascript:;">资质证照</a>
           </li>
           <li>
             <a href="javascript:;">协议规则</a>
@@ -45,7 +63,7 @@
         <!-- 导航菜单 -->
         <ul class="header-menu">
           <li class="menu-item">
-            <span class="category">小米手机</span>
+            <span class="item-name">小米手机</span>
             <ul class="children">
               <li v-for="(item,index) in productList[0]" :key="index" class="product-item">
                 <a href="javascript:;">
@@ -57,7 +75,7 @@
             </ul>
           </li>
           <li class="menu-item">
-            <span class="category">Redmi红米</span>
+            <span class="item-name">Redmi红米</span>
             <ul class="children">
               <li v-for="(item,index) in productList[1]" :key="index" class="product-item">
                 <a href="javascript:;">
@@ -69,7 +87,7 @@
             </ul>
           </li>
           <li class="menu-item">
-            <span class="category">电视</span>
+            <span class="item-name">电视</span>
             <ul class="children animated slideInDown">
               <li v-for="(item,index) in productList[2]" :key="index" class="product-item">
                 <a href="javascript:;">
@@ -137,7 +155,6 @@ export default {
           line-height: 39px;
           a {
             font-size: 12px;
-            font-weight: bold;
             text-decoration: none;
             color: #b0b0b0;
           }
@@ -151,10 +168,9 @@ export default {
         }
       }
       .topbar-user {
-        height: 39px;
-        box-sizing: border-box;
         .my-cart {
           display: inline-block;
+          text-align: center;
           width: 110px;
           height: 39px;
           background: $colorA;
@@ -216,29 +232,24 @@ export default {
       .header-menu {
         margin-left: -170px;
         .menu-item {
+          z-index: 999;
           display: inline-block;
           font-size: 16px;
           color: #333;
           margin-right: 20px;
           font-weight: bold;
           cursor: pointer;
-          .category {
+          .item-name {
             display: inline-block;
             height: 112px;
             line-height: 112px;
-          }
-          &:hover {
-            color: $colorA;
-            .children {
-              opacity: 1;
-              height: 220px;
-            }
           }
           .children {
             display: flex;
             position: absolute;
             left: 0;
             top: 112px;
+            z-index: 999;
             width: 1226px;
             height: 0px;
             opacity: 0;
@@ -271,6 +282,13 @@ export default {
                   color: $colorA;
                 }
               }
+            }
+          }
+          &:hover {
+            color: $colorA;
+            .children {
+              opacity: 1;
+              height: 220px;
             }
           }
         }
