@@ -62,32 +62,41 @@
     </section>
     <!-- 商品列表部分 -->
     <section class="product-list-area">
-        <div class="container">
-            <div class="product-list-wrapper">
-                <!-- 分类标题 -->
-                <h3 class="category-title">手机</h3>
-                <!-- 容器 -->
-                <section>
-                    <!-- 主推产品 -->
-                    <div class="import-product"></div>
-                    <!-- 产品列表 -->
-                    <div class="phone-list">
-                        <ul>
-                            <li></li>
-                            <li></li>
-                            <li></li>
-                            <li></li>
-                        </ul>
-                    </div>
-                </section>
+      <div class="container">
+        <div class="product-list-wrapper">
+          <!-- 分类标题 -->
+          <h3 class="category-title">手机</h3>
+          <!-- 容器 -->
+          <section>
+            <!-- 主推产品 -->
+            <div class="import-product">
+              <a href="javascript:;">
+                <img src="/imgs/phone/mix-alpha.jpg" alt />
+              </a>
             </div>
+            <!-- 产品列表 -->
+            <div class="product-list">
+              <ul v-for="(phone,index) in phoneList" :key="index">
+                <li class="product-list-item" v-for="(item,index) in phone" :key="index">
+                  <a href="javascript:;">
+                    <img :src="item.mainImage" alt />
+                    <p class="product-name">{{item.name}}</p>
+                    <p class="product-subtitle">{{item.subtitle}}</p>
+                    <p class="product-price">{{item.price}}元</p>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </section>
         </div>
+      </div>
     </section>
   </div>
 </template>
 <script>
 import "swiper/dist/css/swiper.css";
 import { swiper, swiperSlide } from "vue-awesome-swiper";
+import { getProductList } from "../api/index";
 export default {
   name: "index",
   data() {
@@ -135,6 +144,7 @@ export default {
           img: "/imgs/slider/slide-5.jpg"
         }
       ],
+      //   商品推荐
       promoList: [
         {
           id: "42",
@@ -152,8 +162,18 @@ export default {
           id: "",
           img: "/imgs/promo/promo-4.png"
         }
-      ]
+      ],
+      //   手机商品列表
+      phoneList: []
     };
+  },
+  mounted() {
+    getProductList({ categoryId: "100012", pageSize: 8 }).then(res => {
+      let phoneList = [];
+      phoneList.push(res.list.slice(0, 4), res.list.slice(4, 8));
+      this.phoneList = phoneList;
+      console.log(this.phoneList);
+    });
   },
   components: {
     swiper,
@@ -288,22 +308,86 @@ export default {
   }
   //   产品部分
   .product-list-area {
-    height: 400px;
     background-color: #f5f5f5;
     .container {
-        width: 1226px;
-        margin:0 auto;
-        .product-list-wrapper {
-            .category-title {
-                font-size: 22px;
-                color: #333;
-                padding: 30px 0 20px;
-            }
-            section {
-                display: flex;
-                justify-content: space-between;
-            }
+      width: 1226px;
+      margin: 0 auto;
+      .product-list-wrapper {
+        .category-title {
+          font-size: 22px;
+          color: #333;
+          padding: 30px 0 20px;
         }
+        section {
+          display: flex;
+          justify-content: space-between;
+          //   添加过渡
+          a {
+            transition: all 0.3s;
+            &:hover {
+              transform: translateY(-3px);
+              box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            }
+          }
+          .import-product {
+            margin-right: 16px;
+            a {
+              display: inline-block;
+              width: 224px;
+              height: 619px;
+              img {
+                width: 224px;
+                height: 619px;
+              }
+            }
+          }
+          .product-list {
+            ul {
+              li {
+                display: inline-block;
+                margin-right: 14px;
+                margin-bottom: 14px;
+                &:nth-last-child(1) {
+                  margin-right: 0;
+                }
+                a {
+                  box-sizing: border-box;
+                  display: inline-block;
+                  width: 236px;
+                  height: 302px;
+                  background-color: #fff;
+                  display: flex;
+                  flex-direction: column;
+                  justify-content: center;
+                  align-items: center;
+                  padding: 50px 0 30px;
+                  text-decoration: none;
+                  img {
+                    width: auto;
+                    height: 140px;
+                    padding: 0 0 10px;
+                  }
+                  .product-name {
+                    font-size: 14px;
+                    color: #333;
+                    font-weight: bold;
+                    padding: 10px 0;
+                  }
+                  .product-subtitle {
+                    font-size: 12px;
+                    color: #999;
+                    padding: 0 0 20px;
+                  }
+                  .product-price {
+                    font-size: 14px;
+                    color: #f20a0a;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
