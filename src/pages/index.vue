@@ -1,47 +1,88 @@
 <template>
   <div class="index">
-    <div class="container">
-      <!-- 导航菜单 -->
-      <div class="nav-menu">
-        <div class="menu-item">
-          <a href="javascript:;">手机 电话卡</a>
+    <!-- 页面菜单及促销部分 -->
+    <section class="menu-banner-area">
+      <div class="container">
+        <div class="banner-wrapper">
+          <!-- 导航菜单 -->
+          <div class="nav-menu">
+            <div class="menu-item">
+              <a href="javascript:;">手机 电话卡</a>
+            </div>
+            <div class="menu-item">
+              <a href="javascript:;">电视 盒子</a>
+            </div>
+            <div class="menu-item">
+              <a href="javascript:;">笔记本 平板</a>
+            </div>
+            <div class="menu-item">
+              <a href="javascript:;">家电 插线板</a>
+            </div>
+            <div class="menu-item">
+              <a href="javascript:;">出行 穿戴</a>
+            </div>
+            <div class="menu-item">
+              <a href="javascript:;">耳机 音箱</a>
+            </div>
+            <div class="menu-item">
+              <a href="javascript:;">电源 配件</a>
+            </div>
+            <div class="menu-item">
+              <a href="javascript:;">生活 箱包</a>
+            </div>
+          </div>
+          <!-- 轮播图 -->
+          <div class="swiper-box">
+            <swiper :options="swiperOption">
+              <swiper-slide v-for="(slide, index) in swiperSlides" :key="index">
+                <a href="javascript:;">
+                  <img :src="slide.img" alt />
+                </a>
+              </swiper-slide>
+              <div class="swiper-pagination" slot="pagination"></div>
+              <div class="swiper-btn swiper-button-prev" slot="button-prev"></div>
+              <div class="swiper-btn swiper-button-next" slot="button-next"></div>
+            </swiper>
+          </div>
         </div>
-        <div class="menu-item">
-          <a href="javascript:;">电视 盒子</a>
-        </div>
-        <div class="menu-item">
-          <a href="javascript:;">笔记本 平板</a>
-        </div>
-        <div class="menu-item">
-          <a href="javascript:;">家电 插线板</a>
-        </div>
-        <div class="menu-item">
-          <a href="javascript:;">出行 穿戴</a>
-        </div>
-        <div class="menu-item">
-          <a href="javascript:;">耳机 音箱</a>
-        </div>
-        <div class="menu-item">
-          <a href="javascript:;">电源 配件</a>
-        </div>
-        <div class="menu-item">
-          <a href="javascript:;">生活 箱包</a>
-        </div>
-      </div>
-      <!-- 轮播图 -->
-      <div class="swiper-box">
-        <swiper :options="swiperOption">
-          <swiper-slide v-for="(slide, index) in swiperSlides" :key="index">
+        <!-- 促销商品 -->
+        <ul class="product-promo-list">
+          <li v-for="(item,index) in promoList" :key="index">
             <a href="javascript:;">
-              <img :src="slide.img" alt />
+              <img :src="item.img" alt />
             </a>
-          </swiper-slide>
-          <div class="swiper-pagination" slot="pagination"></div>
-          <div class="swiper-btn swiper-button-prev" slot="button-prev"></div>
-          <div class="swiper-btn swiper-button-next" slot="button-next"></div>
-        </swiper>
+          </li>
+          <img src="/imgs/promo/ads-1.png" alt />
+        </ul>
+        <!-- 发布会活动海报 -->
+        <a href="javascript:;" class="activity-link">
+          <img src="/imgs/activity/mi-10.jpg" alt />
+        </a>
       </div>
-    </div>
+    </section>
+    <!-- 商品列表部分 -->
+    <section class="product-list-area">
+        <div class="container">
+            <div class="product-list-wrapper">
+                <!-- 分类标题 -->
+                <h3 class="category-title">手机</h3>
+                <!-- 容器 -->
+                <section>
+                    <!-- 主推产品 -->
+                    <div class="import-product"></div>
+                    <!-- 产品列表 -->
+                    <div class="phone-list">
+                        <ul>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                            <li></li>
+                        </ul>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </section>
   </div>
 </template>
 <script>
@@ -51,7 +92,7 @@ export default {
   name: "index",
   data() {
     return {
-        // swiper配置参数
+      // swiper配置参数
       swiperOption: {
         effect: "cube",
         navigation: {
@@ -71,7 +112,7 @@ export default {
         // 所有的参数同 swiper 官方 api 参数
         // ...
       },
-    //   swiper数据
+      //   swiper数据
       swiperSlides: [
         {
           id: "42",
@@ -93,6 +134,24 @@ export default {
           id: "",
           img: "/imgs/slider/slide-5.jpg"
         }
+      ],
+      promoList: [
+        {
+          id: "42",
+          img: "/imgs/promo/promo-1.png"
+        },
+        {
+          id: "45",
+          img: "/imgs/promo/promo-2.png"
+        },
+        {
+          id: "46",
+          img: "/imgs/promo/promo-3.png"
+        },
+        {
+          id: "",
+          img: "/imgs/promo/promo-4.png"
+        }
       ]
     };
   },
@@ -104,78 +163,147 @@ export default {
 </script>
 <style lang="scss" scoped>
 .index {
-  .container {
-    position: relative;
-    width: 1226px;
-    margin: 0 auto;
-    .nav-menu {
-      box-sizing: border-box;
-      position: absolute;
-      z-index: 99;
-      width: 264px;
-      height: 100%;
-      background-color: rgba(105, 101, 101, 0.6);
-      padding: 26px 0;
-      .menu-item {
-        height: 50px;
-        line-height: 50px;
-        &:hover {
-          background: #f60;
-        }
-        a {
-          position: relative;
-          height: 50px;
-          display: block;
-          padding: 0px 30px;
-          text-decoration: none;
-          color: #fff;
-          font-size: 16px;
-          &:after {
-            position: absolute;
-            right: 30px;
-            top: 50%;
-            transform: translateY(-7.5px);
-            content: "";
-            display: inline-block;
-            width: 10px;
-            height: 15px;
-            background: url(../assets/img/index/icon-arrow.png) no-repeat;
-            background-size: 10px 15px;
-            background-position: center;
+  // 菜单与banner部分
+  .menu-banner-area {
+    background-color: #fff;
+    .container {
+      width: 1226px;
+      margin: 0 auto;
+      // 轮播图和菜单
+      .banner-wrapper {
+        position: relative;
+        .nav-menu {
+          box-sizing: border-box;
+          position: absolute;
+          z-index: 99;
+          width: 264px;
+          height: 100%;
+          background-color: rgba(105, 101, 101, 0.6);
+          padding: 26px 0;
+          .menu-item {
+            height: 50px;
+            line-height: 50px;
+            &:hover {
+              .children {
+                display: block;
+              }
+            }
+            .children {
+              display: none;
+              position: absolute;
+              left: 264px;
+              top: 0;
+              width: 964px;
+              height: 451px;
+              background-color: #f60;
+            }
+            &:hover {
+              background: #f60;
+            }
+            a {
+              position: relative;
+              height: 50px;
+              display: block;
+              padding: 0px 30px;
+              text-decoration: none;
+              color: #fff;
+              font-size: 16px;
+              &:after {
+                position: absolute;
+                right: 30px;
+                top: 50%;
+                transform: translateY(-7.5px);
+                content: "";
+                display: inline-block;
+                width: 10px;
+                height: 15px;
+                background: url(../assets/img/index/icon-arrow.png) no-repeat;
+                background-size: 10px 15px;
+                background-position: center;
+              }
+            }
           }
+        }
+        .swiper-box {
+          width: 100%;
+          height: 451px;
+          .swiper-container {
+            .swiper-btn {
+              color: #f5f5f5;
+              width: 41px;
+              height: 69px;
+              background-size: 22px;
+              background-color: rgba($color: #000000, $alpha: 0);
+              &:hover {
+                background-color: rgba($color: #000000, $alpha: 0.5);
+              }
+            }
+            .swiper-button-prev {
+              position: absolute;
+              left: 264px;
+              border-top-right-radius: 2px;
+              border-bottom-right-radius: 2px;
+            }
+            .swiper-button-next {
+              right: 0;
+              border-top-left-radius: 2px;
+              border-bottom-left-radius: 2px;
+            }
+          }
+          img {
+            width: 100%;
+            height: 451px;
+          }
+        }
+      }
+      // 促销列表
+      .product-promo-list {
+        margin-top: 14px;
+        display: flex;
+        justify-content: space-between;
+        li {
+          width: 296px;
+          height: 167px;
+          background-color: #f60;
+          a {
+            img {
+              width: 100%;
+              height: 100%;
+            }
+          }
+        }
+      }
+      // 活动
+      .activity-link {
+        display: inline-block;
+        width: 100%;
+        height: 120px;
+        margin: 31px 0 50px;
+        img {
+          width: 100%;
+          height: 100%;
         }
       }
     }
-    .swiper-box {
-      width: 100%;
-      height: 451px;
-      .swiper-container {
-        .swiper-btn {
-          color: #f5f5f5;
-          width: 41px;
-          height: 69px;
-          background-size: 22px;
-          background-color: rgba($color: #000000, $alpha: 0);
-          &:hover {
-            background-color: rgba($color: #000000, $alpha: 0.5);
-          }
+  }
+  //   产品部分
+  .product-list-area {
+    height: 400px;
+    background-color: #f5f5f5;
+    .container {
+        width: 1226px;
+        margin:0 auto;
+        .product-list-wrapper {
+            .category-title {
+                font-size: 22px;
+                color: #333;
+                padding: 30px 0 20px;
+            }
+            section {
+                display: flex;
+                justify-content: space-between;
+            }
         }
-        .swiper-button-prev {
-          position: absolute;
-          left: 264px;
-          border-top-right-radius: 2px;
-          border-bottom-right-radius: 2px;
-        }
-        .swiper-button-next {
-          right: 0;
-          border-top-left-radius: 2px;
-          border-bottom-left-radius: 2px;
-        }
-      }
-      img {
-        width: 100%;
-        height: 451px;
-      }
     }
   }
 }

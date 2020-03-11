@@ -1,7 +1,7 @@
 <template>
   <header class="header">
     <!-- 顶部导航条 -->
-    <div class="nav-topbar">
+    <nav class="nav-topbar">
       <div class="container">
         <!-- 菜单导航 -->
         <ul class="topbar-menu">
@@ -52,7 +52,7 @@
           </li>
         </ul>
       </div>
-    </div>
+    </nav>
     <!-- 头部导航 -->
     <div class="nav-header">
       <div class="container">
@@ -88,7 +88,7 @@
           </li>
           <li class="menu-item">
             <span class="item-name">电视</span>
-            <ul class="children animated slideInDown">
+            <ul class="children">
               <li v-for="(item,index) in productList[2]" :key="index" class="product-item">
                 <a href="javascript:;">
                   <img :src="item.mainImage" class="product-img" />
@@ -101,7 +101,7 @@
         </ul>
         <!-- 搜索框 -->
         <div class="header-search">
-          <input type="text" class="search-input" />
+          <input type="text" class="search-input" :placeholder="placeholderValue"/>
           <a href="javascript:;" class="search-btn"></a>
         </div>
       </div>
@@ -114,10 +114,22 @@ export default {
   name: "nav-header",
   data() {
     return {
-      productList: []
+      productList: [],
+      placeholderValue:'小米手机10'
     };
   },
   mounted() {
+    const searchInput = document.querySelector(".search-input");
+    const headerSearch = document.querySelector(".header-search");
+    const searchBtn = document.querySelector(".search-btn");
+    searchInput.addEventListener("focus", () => {
+      headerSearch.classList.add("input-focus");
+      searchBtn.style.borderLeftColor = "#f60";
+    });
+    searchInput.addEventListener("blur", () => {
+      headerSearch.classList.remove("input-focus");
+      searchBtn.style.borderLeftColor = "#e0e0e0";
+    });
     getProductList({
       categoryId: "100012",
       pageSize: 18
@@ -151,6 +163,9 @@ export default {
       ul {
         display: flex;
         li {
+          &:hover a{
+            color: #fff;
+          }
           display: inline-block;
           line-height: 39px;
           a {
@@ -177,6 +192,9 @@ export default {
           a {
             color: #fff;
             font-weight: normal;
+            &:hover {
+              color: #fff;
+            }
           }
         }
         li {
@@ -230,15 +248,25 @@ export default {
         }
       }
       .header-menu {
-        margin-left: -170px;
+        margin-left: -195px;
         .menu-item {
-          z-index: 999;
           display: inline-block;
           font-size: 16px;
           color: #333;
           margin-right: 20px;
           font-weight: bold;
           cursor: pointer;
+          &:hover {
+            color: $colorA;
+            .children {
+              opacity: 1;
+              height: 220px;
+              border-top: 1px solid #e5e5e5;
+              .product-item a {
+                display: block;
+              }
+            }
+          }
           .item-name {
             display: inline-block;
             height: 112px;
@@ -248,23 +276,19 @@ export default {
             display: flex;
             position: absolute;
             left: 0;
+            opacity: 0;
             top: 112px;
             z-index: 999;
             width: 1226px;
             height: 0px;
-            opacity: 0;
             background-color: #fff;
-            border-top: 1px solid #e5e5e5;
             box-shadow: 0px 7px 6px 0px rgba(0, 0, 0, 0.11);
-            transition: all 0.5s;
+            transition: all 0.3s ease-in-out;
             .product-item {
-              display: inline-block;
-              display: flex;
-              flex-direction: column;
-              justify-content: space-between;
-              box-sizing: border-box;
               width: 204px;
+              box-sizing: border-box;
               a {
+                display: none;
                 text-align: center;
                 font-size: 12px;
                 text-decoration: none;
@@ -284,16 +308,10 @@ export default {
               }
             }
           }
-          &:hover {
-            color: $colorA;
-            .children {
-              opacity: 1;
-              height: 220px;
-            }
-          }
         }
       }
       .header-search {
+        transition: border 0.5s;
         width: 317px;
         height: 50px;
         box-sizing: border-box;
@@ -302,12 +320,15 @@ export default {
         justify-content: space-between;
         align-items: center;
         .search-input {
+          font-size: 12px;
+          color: #333;
           flex: 1;
           padding: 2px 10px;
           border: none;
           outline: none;
         }
         .search-btn {
+          transition: border 0.5s;
           display: inline-block;
           width: 55px;
           height: 50px;
@@ -316,6 +337,9 @@ export default {
           background-size: 18px;
           background-position: center;
         }
+      }
+      .input-focus {
+        border-color: #f60;
       }
     }
   }
