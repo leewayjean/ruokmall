@@ -101,7 +101,7 @@
         </ul>
         <!-- 搜索框 -->
         <div class="header-search">
-          <input type="text" class="search-input" :placeholder="placeholderValue"/>
+          <input type="text" class="search-input" :placeholder="placeholderValue" />
           <a href="javascript:;" class="search-btn"></a>
         </div>
       </div>
@@ -115,7 +115,7 @@ export default {
   data() {
     return {
       productList: [],
-      placeholderValue:'小米手机10'
+      placeholderValue: "小米手机10"
     };
   },
   mounted() {
@@ -163,7 +163,7 @@ export default {
       ul {
         display: flex;
         li {
-          &:hover a{
+          &:hover a {
             color: #fff;
           }
           display: inline-block;
@@ -172,6 +172,7 @@ export default {
             font-size: 12px;
             text-decoration: none;
             color: #b0b0b0;
+            transition: color 0.5s;
           }
         }
       }
@@ -254,8 +255,8 @@ export default {
           font-size: 16px;
           color: #333;
           margin-right: 20px;
-          font-weight: bold;
           cursor: pointer;
+          transition: color 0.4s;
           &:hover {
             color: $colorA;
             .children {
