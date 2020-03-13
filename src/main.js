@@ -2,10 +2,9 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import axios from 'axios'
+import VueLazyload from 'vue-lazyload'
 
 
-
-Vue.prototype.$axios = axios
 // 添加响应拦截器
 axios.interceptors.response.use(function (response) {
   let res = response.data;
@@ -28,6 +27,12 @@ axios.interceptors.response.use(function (response) {
 });
 
 axios.defaults.baseURL = '/api';
+Vue.prototype.$axios = axios
+// or with options
+Vue.use(VueLazyload, {
+  loading: '/imgs/loading-svg/placeholder-220.png',
+})
+
 
 Vue.config.productionTip = false
 

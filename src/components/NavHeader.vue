@@ -139,7 +139,6 @@ export default {
         let listArr = res.list.slice((i - 1) * 6, i * 6);
         productList.push(listArr);
       }
-      console.log(productList);
       this.productList = productList;
     });
   },

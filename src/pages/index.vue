@@ -49,14 +49,13 @@
         <ul class="product-promo-list">
           <li v-for="(item,index) in promoList" :key="index">
             <a href="javascript:;">
-              <img :src="item.img" alt />
+              <img v-lazy="item.img" alt />
             </a>
           </li>
-          <img src="/imgs/promo/ads-1.png" alt />
         </ul>
         <!-- 发布会活动海报 -->
         <a href="javascript:;" class="activity-link">
-          <img src="/imgs/activity/mi-10.jpg" alt />
+          <img v-lazy="'/imgs/activity/mi-10.jpg'" alt />
         </a>
       </div>
     </section>
@@ -71,7 +70,7 @@
             <!-- 主推产品 -->
             <div class="import-product">
               <a href="javascript:;">
-                <img src="/imgs/phone/mix-alpha.jpg" alt />
+                <img v-lazy="'/imgs/phone/mix-alpha.jpg'" alt />
               </a>
             </div>
             <!-- 产品列表 -->
@@ -79,7 +78,7 @@
               <ul v-for="(phone,index) in phoneList" :key="index">
                 <li class="product-list-item" v-for="(item,index) in phone" :key="index">
                   <a href="javascript:;">
-                    <img :src="item.mainImage" alt />
+                    <img v-lazy="item.mainImage" alt />
                     <p class="product-name">{{item.name}}</p>
                     <p class="product-subtitle">{{item.subtitle}}</p>
                     <p class="product-price">{{item.price}}元起</p>
@@ -173,8 +172,9 @@ export default {
   mounted() {
     getProductList({ categoryId: "100012", pageSize: 8 }).then(res => {
       let phoneList = [];
-      phoneList.push(res.list.slice(8, 12), res.list.slice(12, 16));
+      phoneList.push(res.list.slice(0, 4), res.list.slice(4, 8));
       this.phoneList = phoneList;
+      console.log(this.phoneList);
     });
   },
   components: {
@@ -284,11 +284,21 @@ export default {
         display: flex;
         justify-content: space-between;
         li {
-          width: 296px;
-          height: 167px;
-          background-color: #f60;
           a {
-            img {
+            display: inline-block;
+            position: relative;
+            background-color: #fff;
+            width: 296px;
+            height: 167px;
+            img[lazy="loading"] {
+              position: absolute;
+              left: 50%;
+              top: 50%;
+              transform: translate(-50%, -50%);
+              width: 140px;
+              height: 140px;
+            }
+            img[lazy="loaded"] {
               width: 100%;
               height: 100%;
             }
@@ -301,7 +311,16 @@ export default {
         width: 100%;
         height: 120px;
         margin: 31px 0 50px;
-        img {
+        position: relative;
+        img[lazy="loading"] {
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%);
+          width: 140px;
+          height: 140px;
+        }
+        img[lazy="loaded"] {
           width: 100%;
           height: 100%;
         }
@@ -337,7 +356,18 @@ export default {
               display: inline-block;
               width: 224px;
               height: 619px;
-              img {
+              background-color: #fff;
+              position: relative;
+              img[lazy="loading"] {
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                width: 140px;
+                height: 140x;
+              }
+              img[lazy="loaded"] {
+                /*your style here*/
                 width: 224px;
                 height: 619px;
               }
