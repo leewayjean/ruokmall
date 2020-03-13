@@ -82,7 +82,7 @@
                     <img :src="item.mainImage" alt />
                     <p class="product-name">{{item.name}}</p>
                     <p class="product-subtitle">{{item.subtitle}}</p>
-                    <p class="product-price">{{item.price}}元</p>
+                    <p class="product-price">{{item.price}}元起</p>
                   </a>
                 </li>
               </ul>
@@ -109,11 +109,14 @@ export default {
           prevEl: ".swiper-button-prev"
         },
         pagination: {
-          el: ".swiper-pagination"
+          el: ".swiper-pagination",
+          clickable: true
         },
         cubeEffect: {
-          slideShadows: false,
-          shadow: false
+          slideShadows: true,
+          shadow: true,
+          shadowOffset: 100,
+          shadowScale: 0.6
         },
         loop: true,
         autoplay: true
@@ -170,9 +173,8 @@ export default {
   mounted() {
     getProductList({ categoryId: "100012", pageSize: 8 }).then(res => {
       let phoneList = [];
-      phoneList.push(res.list.slice(0, 4), res.list.slice(4, 8));
+      phoneList.push(res.list.slice(8, 12), res.list.slice(12, 16));
       this.phoneList = phoneList;
-      console.log(this.phoneList);
     });
   },
   components: {
@@ -380,7 +382,7 @@ export default {
                   }
                   .product-price {
                     font-size: 14px;
-                    color: #f20a0a;
+                    color: #f60;
                   }
                 }
               }
