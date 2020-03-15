@@ -23,10 +23,10 @@
           <div class="body">
             <form>
               <p>
-                <input type="email" placeholder="邮箱/手机号码/小米ID" v-model="username"/>
+                <input type="email" placeholder="邮箱/手机号码/小米ID" v-model="username" />
               </p>
               <p>
-                <input type="password" placeholder="密码" v-model="password"/>
+                <input type="password" placeholder="密码" v-model="password" />
               </p>
               <span class="login-btn" @click="login">登录</span>
             </form>
@@ -61,30 +61,43 @@
 <script>
 export default {
   name: "login",
-  data(){
-      return {
-          username:'',
-          password:''
-      }
+  data() {
+    return {
+      username: "",
+      password: ""
+    };
   },
-  methods:{
-      login(){
-          let {username,password} = this;
-          this.$axios.post('/user/login',{
-              username,
-              password
-          }).then((res) => {
-              console.log(res)
-              this.$router.push('/index')
+  methods: {
+    login() {
+      let { username, password } = this;
+      // 正则验证账号密码不为空
+      const reg = /\S/;
+      if (reg.test(username)&&reg.test(password)) {
+        this.$axios
+          .post("/user/login", {
+            username,
+            password
           })
-          // this.$axios.post('/user/register',{
-          //   username:'李伟健',
-          //   email:'1083488756@qq.com',
-          //   password:'123456'
-          // }).then(res => {
-          //   console.log(res);
-          // })
+          .then(res => {
+            console.log(res);
+            // res.data.status
+  
+              // 登录成功，将用户名存储到vuex中
+              this.$store.dispatch("saveUserName", res.username);
+              this.$router.push("/index");
+          });
+      }else {
+        alert("账号密码不能为空")
       }
+
+      // this.$axios.post('/user/register',{
+      //   username:'李伟健',
+      //   email:'1083488756@qq.com',
+      //   password:'123456'
+      // }).then(res => {
+      //   console.log(res);
+      // })
+    }
   }
 };
 </script>

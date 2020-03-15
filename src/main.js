@@ -11,7 +11,7 @@ axios.interceptors.response.use(function (response) {
   let res = response.data;
   /* 
       这里我们和后端协商状态码
-      0  ===  正常响应
+      0  ===  已经登录正常响应
       10 ===  未登录
       。。。。
   */

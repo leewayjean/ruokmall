@@ -37,20 +37,42 @@
           </li>
         </ul>
         <!-- 用户信息 -->
-        <ul class="topbar-user">
-          <li>
-            <a href="/#/login">登录</a>
-          </li>
-          <li>
-            <a href="/#/register">注册</a>
-          </li>
-          <li class="my-cart">
-            <a href="/#/cart">
-              <span class="icon-cart"></span>
-              购物车(0)
+        <div class="topbar-user">
+          <!-- 已登录显示 -->
+          <span class="is-login" v-if="username">
+            <a href="javascript:;" class="user">
+              <span class="username">{{username}}</span>
+              <ul class="userzone">
+                <li>
+                  <a href>个人中心</a>
+                </li>
+                <li>
+                  <a href>评价晒单</a>
+                </li>
+                <li>
+                  <a href>我的喜欢</a>
+                </li>
+                <li>
+                  <a href>小米账号</a>
+                </li>
+                <li>
+                  <a href="javascript:;" @click="logout">退出登录</a>
+                </li>
+              </ul>
             </a>
-          </li>
-        </ul>
+            <a href="javascript:;" class="my-order">我的订单</a>
+          </span>
+          <!-- 未登录显示 -->
+          <span class="not-login" v-else>
+            <a href="/#/login">登录</a>
+            <a href="/#/register">注册</a>
+          </span>
+          <a href="/#/login" class="msg">消息通知</a>
+          <a href="/#/cart" class="my-cart">
+            <span class="icon-cart"></span>
+            购物车({{cartCount}})
+          </a>
+        </div>
       </div>
     </nav>
     <!-- 头部导航 -->
@@ -118,6 +140,14 @@ export default {
       placeholderValue: "小米手机10"
     };
   },
+  computed: {
+    username() {
+      return this.$store.state.username;
+    },
+    cartCount() {
+      return this.$store.state.cartCount;
+    }
+  },
   mounted() {
     const searchInput = document.querySelector(".search-input");
     const headerSearch = document.querySelector(".header-search");
@@ -142,7 +172,15 @@ export default {
       this.productList = productList;
     });
   },
-  methods: {}
+  methods: {
+    logout(){
+      this.$axios.post('/user/logout').then(res =>{
+        console.log('退出成功' + res)
+        this.$store.dispatch('saveUserName','')
+        alert("退出成功")
+      })
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>
@@ -159,48 +197,108 @@ export default {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      ul {
-        display: flex;
+      .topbar-menu {
+        height: 39px;
+        box-sizing: border-box;
         li {
-          &:hover a {
-            color: #fff;
-          }
           display: inline-block;
           line-height: 39px;
+          margin-right: 17px;
           a {
             font-size: 12px;
             text-decoration: none;
             color: #b0b0b0;
             transition: color 0.5s;
-          }
-        }
-      }
-      .topbar-menu {
-        height: 39px;
-        box-sizing: border-box;
-        li {
-          margin-right: 17px;
-        }
-      }
-      .topbar-user {
-        .my-cart {
-          display: inline-block;
-          text-align: center;
-          width: 110px;
-          height: 39px;
-          background: $colorA;
-          a {
-            color: #fff;
-            font-weight: normal;
             &:hover {
               color: #fff;
             }
           }
         }
-        li {
-          margin-right: 19px;
-          &:last-child {
-            margin-right: 0;
+      }
+      .topbar-user {
+        vertical-align: middle;
+        a {
+          font-size: 12px;
+          text-decoration: none;
+          color: #b0b0b0;
+          transition: color 0.4s;
+          &:hover {
+            color: #fff;
+          }
+        }
+        .not-login {
+          a {
+            padding: 0 4px;
+            margin-right: 12px;
+          }
+        }
+        .is-login {
+          .user,
+          .my-order {
+            margin-right: 22px;
+          }
+          .user {
+            position: relative;
+            padding: 12px 30px;
+            color: #fff;
+            .userzone {
+              // 隐藏状态
+              height: 0;
+              /* padding: 0; */
+              opacity: 0;
+              padding: 0;
+              position: absolute;
+              left: 0;
+              z-index: 999;
+              background: #fff;
+              /* text-align: center; */
+              width: 100%;
+              box-shadow: 1px 7px 7px 0px #0000001a;
+              transition: height .5s,padding .4s ,opacity .2s;
+              li {
+                display: none;
+                box-sizing: border-box;
+                text-align: center;
+                padding: 11px 8px;
+                a {
+                  color: #424242;
+                }
+              }
+            }
+            &:hover {
+              color: $colorA;
+              background-color: #fff;
+              .userzone {
+                height: 170px;
+                opacity: 1;
+                padding: 10px 0;
+                li{
+                  display: block;
+                  &:hover{
+                    background-color: #f5f5f5;
+                    a{
+                      color: #f60;
+                    }
+                  }
+                  
+                }
+              }
+            }
+          }
+        }
+        .msg {
+          margin-right: 18px;
+        }
+        .my-cart {
+          display: inline-block;
+          text-align: center;
+          width: 110px;
+          height: 39px;
+          line-height: 39px;
+          background: #424242;
+          &:hover {
+            background-color: #fff;
+            color: $colorA;
           }
         }
       }
