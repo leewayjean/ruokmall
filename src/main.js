@@ -3,6 +3,7 @@ import App from './App.vue'
 import router from './router'
 import axios from 'axios'
 import VueLazyload from 'vue-lazyload'
+import store from './store'
 
 
 // 添加响应拦截器
@@ -38,5 +39,6 @@ Vue.config.productionTip = false
 
 new Vue({
   router,
+  store,
   render: h => h(App),
 }).$mount('#app')

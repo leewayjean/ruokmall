@@ -77,6 +77,13 @@ export default {
               console.log(res)
               this.$router.push('/index')
           })
+          // this.$axios.post('/user/register',{
+          //   username:'李伟健',
+          //   email:'1083488756@qq.com',
+          //   password:'123456'
+          // }).then(res => {
+          //   console.log(res);
+          // })
       }
   }
 };
