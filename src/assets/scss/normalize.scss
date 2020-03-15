@@ -76,6 +76,10 @@ html,body {
   body {
 	margin: 0;
   }
+  // 设置页面充满屏幕
+  html,body {
+    height: 100%;
+  }
   
   /**
    * Render the `main` element consistently in IE.

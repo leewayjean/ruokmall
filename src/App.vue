@@ -5,13 +5,14 @@
 </template>
 
 <script>
-
 export default {
-  name: 'App',
-  components: {
-  }
-}
+  name: "App",
+  components: {}
+};
 </script>
 <style lang="scss" >
-@import './assets/scss/normalize.scss'
+@import "./assets/scss/normalize.scss";
+#app {
+  height: 100%;
+}
 </style>

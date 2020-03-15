@@ -39,13 +39,13 @@
         <!-- 用户信息 -->
         <ul class="topbar-user">
           <li>
-            <a href="javascript:;">登录</a>
+            <a href="/#/login">登录</a>
           </li>
           <li>
-            <a href="javascript:;">注册</a>
+            <a href="/#/register">注册</a>
           </li>
           <li class="my-cart">
-            <a href="javascript:;">
+            <a href="/#/cart">
               <span class="icon-cart"></span>
               购物车(0)
             </a>
