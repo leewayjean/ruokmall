@@ -71,6 +71,9 @@
           <a href="/#/cart" class="my-cart">
             <span class="icon-cart"></span>
             购物车({{cartCount}})
+            <div class="cart-detail">
+              <p class="empty-tip">购物车中还没有商品，赶紧选购吧~</p>
+            </div>
           </a>
         </div>
       </div>
@@ -173,12 +176,12 @@ export default {
     });
   },
   methods: {
-    logout(){
-      this.$axios.post('/user/logout').then(res =>{
-        console.log('退出成功' + res)
-        this.$store.dispatch('saveUserName','')
-        alert("退出成功")
-      })
+    logout() {
+      this.$axios.post("/user/logout").then(res => {
+        console.log("退出成功" + res);
+        this.$store.dispatch("saveUserName", "");
+        alert("退出成功");
+      });
     }
   }
 };
@@ -226,12 +229,14 @@ export default {
             color: #fff;
           }
         }
+        // 未登录时
         .not-login {
           a {
             padding: 0 4px;
             margin-right: 12px;
           }
         }
+        // 已登录
         .is-login {
           .user,
           .my-order {
@@ -241,20 +246,31 @@ export default {
             position: relative;
             padding: 12px 30px;
             color: #fff;
+            .username::after {
+              content: "";
+              position: absolute;
+              right: 15px;
+              top: 50%;
+              content: "";
+              display: inline-block;
+              width: 0;
+              height: 0;
+              border-style: solid;
+              border-width: 4px;
+              border-color: #fff transparent transparent transparent;
+            }
             .userzone {
               // 隐藏状态
               height: 0;
-              /* padding: 0; */
               opacity: 0;
               padding: 0;
               position: absolute;
               left: 0;
               z-index: 999;
               background: #fff;
-              /* text-align: center; */
               width: 100%;
               box-shadow: 1px 7px 7px 0px #0000001a;
-              transition: height .5s,padding .4s ,opacity .2s;
+              transition: height 0.5s, padding 0.4s, opacity 0.2s;
               li {
                 display: none;
                 box-sizing: border-box;
@@ -268,19 +284,21 @@ export default {
             &:hover {
               color: $colorA;
               background-color: #fff;
+              ::after {
+                border-top-color: #f60;
+              }
               .userzone {
                 height: 170px;
                 opacity: 1;
                 padding: 10px 0;
-                li{
+                li {
                   display: block;
-                  &:hover{
+                  &:hover {
                     background-color: #f5f5f5;
-                    a{
+                    a {
                       color: #f60;
                     }
                   }
-                  
                 }
               }
             }
@@ -290,15 +308,38 @@ export default {
           margin-right: 18px;
         }
         .my-cart {
+          position: relative;
           display: inline-block;
           text-align: center;
           width: 110px;
           height: 39px;
           line-height: 39px;
           background: #424242;
+          .cart-detail {
+            position: absolute;
+            top: 39px;
+            right: 0;
+            z-index: 99;
+            width: 260px;
+            height: 0px;
+            opacity: 0;
+            background: #fff;
+            box-shadow: 1px 7px 7px 0px #0000001a;
+            transition: all 0.4s;
+            text-align: center;
+            line-height: 100px;
+            .empty-tip {
+              font-size: 12px;
+              color: #333;
+            }
+          }
           &:hover {
             background-color: #fff;
             color: $colorA;
+            .cart-detail {
+              height: 100px;
+              opacity: 1;
+            }
           }
         }
       }

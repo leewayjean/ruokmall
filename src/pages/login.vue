@@ -16,11 +16,12 @@
         <div class="login-form">
           <!-- 登录方式切换 -->
           <p class="switch">
-            <em class="acount-login">账号登录</em>
+            <em class="acount-login" @click="lock = true" :class="{isActive:lock}">账号登录</em>
             <span>|</span>
-            <em class="scan-login">扫码登录</em>
+            <em class="scan-login" @click="lock = false" :class="{isActive:!lock}">扫码登录</em>
           </p>
-          <div class="body">
+          <!-- 账号登录时显示 -->
+          <div class="acount-login-body" v-if="lock">
             <form>
               <p>
                 <input type="email" placeholder="邮箱/手机号码/小米ID" v-model="username" />
@@ -38,6 +39,10 @@
                 <a href>忘记密码</a>
               </span>
             </p>
+          </div>
+          <!-- 扫码登录时显示 -->
+          <div class="QR-code" v-else>
+            <img src="/imgs/qrcode.png" alt />
           </div>
         </div>
       </div>
@@ -64,7 +69,8 @@ export default {
   data() {
     return {
       username: "",
-      password: ""
+      password: "",
+      lock:true
     };
   },
   methods: {
@@ -72,7 +78,7 @@ export default {
       let { username, password } = this;
       // 正则验证账号密码不为空
       const reg = /\S/;
-      if (reg.test(username)&&reg.test(password)) {
+      if (reg.test(username) && reg.test(password)) {
         this.$axios
           .post("/user/login", {
             username,
@@ -81,13 +87,13 @@ export default {
           .then(res => {
             console.log(res);
             // res.data.status
-  
-              // 登录成功，将用户名存储到vuex中
-              this.$store.dispatch("saveUserName", res.username);
-              this.$router.push("/index");
+
+            // 登录成功，将用户名存储到vuex中
+            this.$store.dispatch("saveUserName", res.username);
+            this.$router.push("/index");
           });
-      }else {
-        alert("账号密码不能为空")
+      } else {
+        alert("账号密码不能为空");
       }
 
       // this.$axios.post('/user/register',{
@@ -154,6 +160,7 @@ export default {
           justify-content: space-between;
           margin-bottom: 49px;
           em {
+            cursor: pointer;
             font-size: 22px;
             color: #333;
             &:nth-of-type(1) {
@@ -162,12 +169,18 @@ export default {
             &:nth-of-type(2) {
               margin-right: 42px;
             }
+            &.isActive{
+              color: #f60;
+            }
+            &:hover {
+              color: #f60;
+            }
           }
           span {
             color: #d7d7d7;
           }
         }
-        .body {
+        .acount-login-body {
           form {
             p {
               height: 50px;
@@ -215,6 +228,15 @@ export default {
               color: #999;
               text-decoration: none;
             }
+          }
+        }
+        .QR-code {
+          width: 349px;
+          height: 306px;
+          img {
+            width: 100%;
+            height: 100%;
+            margin-top: 20px;
           }
         }
       }

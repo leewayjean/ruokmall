@@ -6,29 +6,18 @@
         <div class="banner-wrapper">
           <!-- 导航菜单 -->
           <div class="nav-menu">
-            <div class="menu-item">
-              <a href="javascript:;">手机 电话卡</a>
-            </div>
-            <div class="menu-item">
-              <a href="javascript:;">电视 盒子</a>
-            </div>
-            <div class="menu-item">
-              <a href="javascript:;">笔记本 平板</a>
-            </div>
-            <div class="menu-item">
-              <a href="javascript:;">家电 插线板</a>
-            </div>
-            <div class="menu-item">
-              <a href="javascript:;">出行 穿戴</a>
-            </div>
-            <div class="menu-item">
-              <a href="javascript:;">耳机 音箱</a>
-            </div>
-            <div class="menu-item">
-              <a href="javascript:;">电源 配件</a>
-            </div>
-            <div class="menu-item">
-              <a href="javascript:;">生活 箱包</a>
+            <div class="menu-item" v-for="(categoryItem,index) in categories" :key="index">
+              <a href="javascript:;" class="item-name">{{categoryItem.name}}</a>
+              <div class="children-box">
+                <ul v-for="(item,i) in categoryItem.list" :key="i">
+                  <li v-for="(it,j) in item" :key="j" class="product-item">
+                    <a href="javascript:;">
+                      <img :src="it.imgSrc" alt />
+                      <span>{{it.title}}</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
           <!-- 轮播图 -->
@@ -166,7 +155,197 @@ export default {
         }
       ],
       //   手机商品列表
-      phoneList: []
+      phoneList: [],
+      //categories
+      categories: [
+        {
+          name: "手机 电话卡",
+          list: [
+            [
+              { title: "小米10", imgSrc: "/imgs/productList/phone.png", id: 1 },
+              { title: "小米10Pro", imgSrc: "/imgs/productList/phone-1.png", id: 1 },
+              { title: "小米CC9", imgSrc: "/imgs/productList/phone-2.png", id: 1 },
+              { title: "RedMi note8", imgSrc: "/imgs/productList/phone-3.png", id: 1 },
+              { title: "小米Mix3", imgSrc: "/imgs/productList/phone-2.png", id: 1 },
+              { title: "Redmi红米", imgSrc: "/imgs/productList/phone-3.png", id: 1 },
+            ],
+            [
+              { title: "小米10", imgSrc: "/imgs/productList/phone.png", id: 1 },
+              { title: "小米10Pro", imgSrc: "/imgs/productList/phone-1.png", id: 1 },
+              { title: "小米CC9", imgSrc: "/imgs/productList/phone-2.png", id: 1 },
+              { title: "RedMi note8", imgSrc: "/imgs/productList/phone-3.png", id: 1 },
+              { title: "小米Mix3", imgSrc: "/imgs/productList/phone-2.png", id: 1 },
+              { title: "Redmi红米", imgSrc: "/imgs/productList/phone-3.png", id: 1 },
+            ],
+            [
+              { title: "小米10", imgSrc: "/imgs/productList/phone.png", id: 1 },
+              { title: "小米10Pro", imgSrc: "/imgs/productList/phone-1.png", id: 1 },
+              { title: "小米CC9", imgSrc: "/imgs/productList/phone-2.png", id: 1 },
+              { title: "RedMi note8", imgSrc: "/imgs/productList/phone-3.png", id: 1 },
+              { title: "小米Mix3", imgSrc: "/imgs/productList/phone-2.png", id: 1 },
+              { title: "Redmi红米", imgSrc: "/imgs/productList/phone-3.png", id: 1 },
+            ]
+          ]
+        },
+        {
+          name: "电视 盒子",
+          list: [
+            [
+              { title: "小米10", imgSrc: "/imgs/productList/phone.png", id: 1 },
+              { title: "小米10Pro", imgSrc: "/imgs/productList/phone-1.png", id: 1 },
+              { title: "小米CC9", imgSrc: "/imgs/productList/phone-2.png", id: 1 },
+              { title: "RedMi note8", imgSrc: "/imgs/productList/phone-3.png", id: 1 },
+              { title: "小米Mix3", imgSrc: "/imgs/productList/phone-2.png", id: 1 },
+              { title: "Redmi红米", imgSrc: "/imgs/productList/phone-3.png", id: 1 },
+            ],
+            [
+              { title: "小米10", imgSrc: "/imgs/productList/phone.png", id: 1 },
+              { title: "小米10Pro", imgSrc: "/imgs/productList/phone-1.png", id: 1 },
+              { title: "小米CC9", imgSrc: "/imgs/productList/phone-2.png", id: 1 },
+              { title: "RedMi note8", imgSrc: "/imgs/productList/phone-3.png", id: 1 },
+              { title: "小米Mix3", imgSrc: "/imgs/productList/phone-2.png", id: 1 },
+              { title: "Redmi红米", imgSrc: "/imgs/productList/phone-3.png", id: 1 },
+            ],
+            [
+              { title: "小米10", imgSrc: "/imgs/productList/phone.png", id: 1 },
+              { title: "小米10Pro", imgSrc: "/imgs/productList/phone-1.png", id: 1 },
+              { title: "小米CC9", imgSrc: "/imgs/productList/phone-2.png", id: 1 },
+              { title: "RedMi note8", imgSrc: "/imgs/productList/phone-3.png", id: 1 },
+              { title: "小米Mix3", imgSrc: "/imgs/productList/phone-2.png", id: 1 },
+              { title: "Redmi红米", imgSrc: "/imgs/productList/phone-3.png", id: 1 },
+            ],
+            [
+              { title: "小米10", imgSrc: "/imgs/productList/phone.png", id: 1 },
+              { title: "小米10Pro", imgSrc: "/imgs/productList/phone-1.png", id: 1 },
+              { title: "小米CC9", imgSrc: "/imgs/productList/phone-2.png", id: 1 },
+              { title: "RedMi note8", imgSrc: "/imgs/productList/phone-3.png", id: 1 },
+              { title: "小米Mix3", imgSrc: "/imgs/productList/phone-2.png", id: 1 },
+              { title: "Redmi红米", imgSrc: "/imgs/productList/phone-3.png", id: 1 },
+            ]
+          ]
+        },
+        {
+          name: "笔记本 平板",
+          list: [
+            [
+              { title: "小米10", imgSrc: "/imgs/productList/phone.png", id: 1 },
+              { title: "小米10Pro", imgSrc: "/imgs/productList/phone-1.png", id: 1 },
+              { title: "小米CC9", imgSrc: "/imgs/productList/phone-2.png", id: 1 },
+              { title: "RedMi note8", imgSrc: "/imgs/productList/phone-3.png", id: 1 },
+              { title: "小米Mix3", imgSrc: "/imgs/productList/phone-2.png", id: 1 },
+              { title: "Redmi红米", imgSrc: "/imgs/productList/phone-3.png", id: 1 },
+            ]
+          ]
+        },
+        {
+          name: "家电 插线板",
+          list: [
+            [
+              { title: "小米10", imgSrc: "/imgs/productList/phone.png", id: 1 },
+              { title: "小米10Pro", imgSrc: "/imgs/productList/phone-1.png", id: 1 },
+              { title: "小米CC9", imgSrc: "/imgs/productList/phone-2.png", id: 1 },
+              { title: "RedMi note8", imgSrc: "/imgs/productList/phone-3.png", id: 1 },
+              { title: "小米Mix3", imgSrc: "/imgs/productList/phone-2.png", id: 1 },
+              { title: "Redmi红米", imgSrc: "/imgs/productList/phone-3.png", id: 1 },
+            ],
+            [
+              { title: "小米10", imgSrc: "/imgs/productList/phone.png", id: 1 },
+              { title: "小米10Pro", imgSrc: "/imgs/productList/phone-1.png", id: 1 },
+              { title: "小米CC9", imgSrc: "/imgs/productList/phone-2.png", id: 1 },
+              { title: "RedMi note8", imgSrc: "/imgs/productList/phone-3.png", id: 1 },
+              { title: "小米Mix3", imgSrc: "/imgs/productList/phone-2.png", id: 1 },
+              { title: "Redmi红米", imgSrc: "/imgs/productList/phone-3.png", id: 1 },
+            ]
+          ]
+        },
+        {
+          name: "出行 穿戴",
+          list: [
+            [
+              { title: "小米10", imgSrc: "/imgs/productList/phone.png", id: 1 },
+              { title: "小米10Pro", imgSrc: "/imgs/productList/phone-1.png", id: 1 },
+              { title: "小米CC9", imgSrc: "/imgs/productList/phone-2.png", id: 1 },
+              { title: "RedMi note8", imgSrc: "/imgs/productList/phone-3.png", id: 1 },
+              { title: "小米Mix3", imgSrc: "/imgs/productList/phone-2.png", id: 1 },
+              { title: "Redmi红米", imgSrc: "/imgs/productList/phone-3.png", id: 1 },
+            ],
+            [
+              { title: "小米10", imgSrc: "/imgs/productList/phone.png", id: 1 },
+              { title: "小米10Pro", imgSrc: "/imgs/productList/phone-1.png", id: 1 },
+              { title: "小米CC9", imgSrc: "/imgs/productList/phone-2.png", id: 1 },
+              { title: "RedMi note8", imgSrc: "/imgs/productList/phone-3.png", id: 1 },
+              { title: "小米Mix3", imgSrc: "/imgs/productList/phone-2.png", id: 1 },
+              { title: "Redmi红米", imgSrc: "/imgs/productList/phone-3.png", id: 1 },
+            ]
+          ]
+        },
+        {
+          name: "电源 配件",
+          list: [
+            [
+              { title: "小米10", imgSrc: "/imgs/productList/phone.png", id: 1 },
+              { title: "小米10Pro", imgSrc: "/imgs/productList/phone-1.png", id: 1 },
+              { title: "小米CC9", imgSrc: "/imgs/productList/phone-2.png", id: 1 },
+              { title: "RedMi note8", imgSrc: "/imgs/productList/phone-3.png", id: 1 },
+              { title: "小米Mix3", imgSrc: "/imgs/productList/phone-2.png", id: 1 },
+              { title: "Redmi红米", imgSrc: "/imgs/productList/phone-3.png", id: 1 },
+            ],
+            [
+              { title: "小米10", imgSrc: "/imgs/productList/phone.png", id: 1 },
+              { title: "小米10Pro", imgSrc: "/imgs/productList/phone-1.png", id: 1 },
+              { title: "小米CC9", imgSrc: "/imgs/productList/phone-2.png", id: 1 },
+              { title: "RedMi note8", imgSrc: "/imgs/productList/phone-3.png", id: 1 },
+              { title: "小米Mix3", imgSrc: "/imgs/productList/phone-2.png", id: 1 },
+              { title: "Redmi红米", imgSrc: "/imgs/productList/phone-3.png", id: 1 },
+            ]
+          ]
+        },
+        {
+          name: "生活 箱包",
+          list: [
+            [
+              { title: "小米10", imgSrc: "/imgs/productList/phone.png", id: 1 },
+              { title: "小米10Pro", imgSrc: "/imgs/productList/phone-1.png", id: 1 },
+              { title: "小米CC9", imgSrc: "/imgs/productList/phone-2.png", id: 1 },
+              { title: "RedMi note8", imgSrc: "/imgs/productList/phone-3.png", id: 1 },
+              { title: "小米Mix3", imgSrc: "/imgs/productList/phone-2.png", id: 1 },
+              { title: "Redmi红米", imgSrc: "/imgs/productList/phone-3.png", id: 1 },
+            ],
+            [
+              { title: "小米10", imgSrc: "/imgs/productList/phone.png", id: 1 },
+              { title: "小米10Pro", imgSrc: "/imgs/productList/phone-1.png", id: 1 },
+              { title: "小米CC9", imgSrc: "/imgs/productList/phone-2.png", id: 1 },
+              
+            ]
+          ]
+        },
+        {
+          name: "健康 儿童",
+          list: [
+            [
+              { title: "小米10", imgSrc: "/imgs/productList/phone.png", id: 1 },
+              { title: "小米10Pro", imgSrc: "/imgs/productList/phone-1.png", id: 1 },
+              { title: "小米CC9", imgSrc: "/imgs/productList/phone-2.png", id: 1 },
+              { title: "RedMi note8", imgSrc: "/imgs/productList/phone-3.png", id: 1 },
+              { title: "小米Mix3", imgSrc: "/imgs/productList/phone-2.png", id: 1 },
+              { title: "Redmi红米", imgSrc: "/imgs/productList/phone-3.png", id: 1 },
+              
+            ],
+            [
+              { title: "小米10", imgSrc: "/imgs/productList/phone.png", id: 1 },
+              { title: "小米10Pro", imgSrc: "/imgs/productList/phone-1.png", id: 1 },
+              { title: "小米CC9", imgSrc: "/imgs/productList/phone-2.png", id: 1 },
+              
+            ],
+                        [
+              { title: "小米10", imgSrc: "/imgs/productList/phone.png", id: 1 },
+              { title: "小米10Pro", imgSrc: "/imgs/productList/phone-1.png", id: 1 },
+              { title: "小米CC9", imgSrc: "/imgs/productList/phone-2.png", id: 1 },
+              
+            ]
+          ]
+        }
+      ]
     };
   },
   mounted() {
@@ -174,7 +353,6 @@ export default {
       let phoneList = [];
       phoneList.push(res.list.slice(0, 4), res.list.slice(4, 8));
       this.phoneList = phoneList;
-      console.log(this.phoneList);
     });
   },
   components: {
@@ -198,50 +376,78 @@ export default {
           box-sizing: border-box;
           position: absolute;
           z-index: 99;
-          width: 264px;
+          width: 234px;
           height: 100%;
           background-color: rgba(105, 101, 101, 0.6);
           padding: 26px 0;
           .menu-item {
             height: 50px;
             line-height: 50px;
-            &:hover {
-              .children {
-                display: block;
-              }
-            }
-            .children {
-              display: none;
-              position: absolute;
-              left: 264px;
-              top: 0;
-              width: 964px;
-              height: 451px;
-              background-color: #f60;
-            }
-            &:hover {
-              background: #f60;
-            }
-            a {
+            .item-name {
               position: relative;
               height: 50px;
               display: block;
               padding: 0px 30px;
               text-decoration: none;
               color: #fff;
-              font-size: 16px;
+              font-size: 14px;
               &:after {
+                content: "";
                 position: absolute;
                 right: 30px;
                 top: 50%;
                 transform: translateY(-7.5px);
-                content: "";
                 display: inline-block;
                 width: 10px;
                 height: 15px;
                 background: url(../assets/img/index/icon-arrow.png) no-repeat;
                 background-size: 10px 15px;
                 background-position: center;
+              }
+            }
+            .children-box {
+              display: none;
+              position: absolute;
+              left: 234px;
+              top: 0;
+              width: 992px;
+              height: 451px;
+              box-shadow: 0 8px 16px rgba(0, 0, 0, 0.18);
+              ul {
+                float: left;
+                width: 248px;
+                height: 100%;
+                background-color: #fff;
+                .product-item {
+                  width: 100%;
+                  a {
+                    position: relative;
+                    width: 100%;
+                    padding: 10px 0;
+                    display: inline-block;
+                    text-decoration: none;
+                    color: #333;
+                    font-size: 14px;
+                    img {
+                      width: 40px;
+                      height: 40px;
+                      margin: 0 20px 0 12px;
+                      vertical-align: middle;
+                    }
+                    span {
+                      vertical-align: middle;
+                    }
+                    &:hover{
+                      color: #f60;
+                    }
+                  }
+                }
+              }
+            }
+            &:hover {
+              background: #f60;
+              .children-box {
+                display: block;
               }
             }
           }
