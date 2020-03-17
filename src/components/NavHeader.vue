@@ -65,7 +65,7 @@
           <!-- 未登录显示 -->
           <span class="not-login" v-else>
             <a href="/#/login">登录</a>
-            <a href="/#/register">注册</a>
+            <a  @click="$emit('register-click')">注册</a>
           </span>
           <a href="/#/login" class="msg">消息通知</a>
           <a href="/#/cart" class="my-cart">
@@ -234,6 +234,7 @@ export default {
           a {
             padding: 0 4px;
             margin-right: 12px;
+            cursor: pointer;
           }
         }
         // 已登录

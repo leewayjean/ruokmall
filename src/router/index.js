@@ -37,7 +37,7 @@ const router = new VueRouter({
                     component: Index
                 },
                 {
-                    path: 'product',
+                    path: 'product/:id',
                     name: 'prodcut',
                     component: Product
                 },

@@ -49,9 +49,9 @@
     </main>
     <footer>
       <p class="about">
-        <a href="javscript:;" class="is-selected">繁体</a>
+        <a href="javscript:;" class="is-selected">简体</a>
         <span>|</span>
-        <a href="javscript:;">简体</a>
+        <a href="javscript:;">繁体</a>
         <span>|</span>
         <a href="javscript:;">English</a>
         <span>|</span>
