@@ -127,11 +127,11 @@ export default {
           img: "/imgs/slider/slide-3.jpg"
         },
         {
-          id: "",
+          id: "33",
           img: "/imgs/slider/slide-4.jpg"
         },
         {
-          id: "",
+          id: "22",
           img: "/imgs/slider/slide-5.jpg"
         }
       ],

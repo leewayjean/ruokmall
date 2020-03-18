@@ -83,7 +83,7 @@
       <div class="container">
         <!-- logo -->
         <div class="header-logo">
-          <a href="/#" class="icon-logo"></a>
+          <a href="/#/" class="icon-logo"></a>
         </div>
         <!-- 导航菜单 -->
         <ul class="header-menu">

@@ -24,6 +24,10 @@ Vue.use(VueRouter);
 
 const router = new VueRouter({
     routes: [
+        {
+            path:'*',
+            redirect:'/'
+        },
         //首页 、产品页 、详情页
         {
             path: '/',
