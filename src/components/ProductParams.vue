@@ -13,9 +13,10 @@
           <a href="javascript:;">概述</a>
           <span class="split">|</span>
           <a href="javascript:;">参数</a>
+          <span class="split">|</span>
           <a href="javascript:;">用户评价</a>
           <span class="split">|</span>
-          <span class="btn-buy">立即购买</span>
+          <span class="btn-buy" @click="$emit('btn-click')">立即购买</span>
         </div>
       </div>
     </div>
@@ -33,9 +34,10 @@
           <a href="javascript:;">概述</a>
           <span class="split">|</span>
           <a href="javascript:;">参数</a>
+          <span class="split">|</span>
           <a href="javascript:;">用户评价</a>
           <span class="split">|</span>
-          <span class="btn-buy">立即购买</span>
+          <span class="btn-buy" @click="$emit('btn-click')">立即购买</span>
         </div>
       </div>
     </div>
@@ -55,7 +57,7 @@ export default {
   },
   methods: {
     init() {
-      const TOP_DISTANCE = 161; //参数组件距离顶部距离
+      const TOP_DISTANCE = 161 + 71; //参数组件距离顶部距离
       let scrollTop =
         document.documentElement.scrollTop || document.body.scrollTop;
       scrollTop > TOP_DISTANCE ? (this.isFixed = true) : (this.isFixed = false);
@@ -115,6 +117,7 @@ export default {
     top: -71px;
     margin-top: 71px;
     width: 100%;
+    z-index: 999;
   }
   .navbar-hidden {
     position: fixed;

@@ -388,7 +388,7 @@ export default {
         }
       }
       .header-menu {
-        margin-left: -195px;
+        margin-left: -245px;
         .menu-item {
           display: inline-block;
           font-size: 16px;

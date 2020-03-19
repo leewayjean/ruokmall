@@ -46,7 +46,7 @@ const router = new VueRouter({
                     component: Product
                 },
                 {
-                    path: 'detail',
+                    path: 'detail/:id',
                     name: 'detail',
                     component: Detail
                 }

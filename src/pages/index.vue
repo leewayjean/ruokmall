@@ -22,7 +22,7 @@
           </div>
           <!-- 轮播图 -->
           <div class="swiper-box">
-            <swiper :options="swiperOption">    
+            <swiper :options="swiperOption">
               <swiper-slide v-for="(slide, index) in swiperSlides" :key="index">
                 <router-link :to="'/product/'+slide.id">
                   <img :src="slide.img" alt />
@@ -693,6 +693,7 @@ export default {
       let phoneList = [];
       phoneList.push(res.list.slice(0, 4), res.list.slice(4, 8));
       this.phoneList = phoneList;
+      console.log(this.phoneList)
     });
   },
   components: {
@@ -833,7 +834,7 @@ export default {
           a {
             display: inline-block;
             position: relative;
-            background-color: #fff;
+            background-color: #f5f5f5;
             width: 296px;
             height: 167px;
             img[lazy="loading"] {
@@ -854,6 +855,7 @@ export default {
       // 活动
       .activity-link {
         display: inline-block;
+        background-color: #f5f5f5;
         width: 100%;
         height: 120px;
         margin: 31px 0 50px;

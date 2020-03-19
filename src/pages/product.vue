@@ -1,6 +1,6 @@
 <template>
   <div class="product">
-    <product-params></product-params>
+    <product-params @btn-click="buy"></product-params>
     <img src="/imgs/product-intro/intro-2.png" alt />
     <div class="container">
       <img src="/imgs/product-intro/intro-1.png" alt />
@@ -12,8 +12,18 @@
 import ProductParams from "../components/ProductParams";
 export default {
   name: "product",
+  data(){
+    return{
+      id:this.$route.params.id,
+    }
+  },
   components: {
     ProductParams
+  },
+  methods:{
+    buy(){
+      this.$router.push(`/detail/${this.id}`)
+    }
   }
 };
 </script>
