@@ -3,11 +3,7 @@
     <div class="navbar">
       <div class="container">
         <div class="left">
-          <span class="product-name">小米8 透明探索版</span>
-          <span class="split">|</span>
-          <a href="javascript:;">小米8</a>
-          <span class="split">|</span>
-          <a href="javascript:;">小米8SE</a>
+          <span class="product-name">{{productName}}</span>
         </div>
         <div class="right">
           <a href="javascript:;">概述</a>
@@ -15,7 +11,6 @@
           <a href="javascript:;">参数</a>
           <span class="split">|</span>
           <a href="javascript:;">用户评价</a>
-          <span class="split">|</span>
           <span class="btn-buy" @click="$emit('btn-click')">立即购买</span>
         </div>
       </div>
@@ -24,11 +19,7 @@
     <div class="navbar navbar-hidden" :class="{'navbar-fixed':isFixed}">
       <div class="container">
         <div class="left">
-          <span class="product-name">小米8 透明探索版</span>
-          <span class="split">|</span>
-          <a href="javascript:;">小米8</a>
-          <span class="split">|</span>
-          <a href="javascript:;">小米8SE</a>
+          <span class="product-name">{{productName}}</span>
         </div>
         <div class="right">
           <a href="javascript:;">概述</a>
@@ -36,7 +27,6 @@
           <a href="javascript:;">参数</a>
           <span class="split">|</span>
           <a href="javascript:;">用户评价</a>
-          <span class="split">|</span>
           <span class="btn-buy" @click="$emit('btn-click')">立即购买</span>
         </div>
       </div>
@@ -52,6 +42,11 @@ export default {
       navbarHidden: false
     };
   },
+  props:{
+    productName:{
+      type:String
+    }
+  },
   mounted() {
     window.addEventListener("scroll", this.init);
   },
@@ -65,7 +60,7 @@ export default {
   }
 };
 </script>
-<style lang="scss" scoped>
+<style lang="scss" >
 .product-params {
   .navbar {
     height: 70px;
@@ -107,6 +102,7 @@ export default {
           color: #fff;
           background-color: #f60;
           cursor: pointer;
+          margin-left: 15px;
         }
       }
     }

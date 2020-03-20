@@ -14,7 +14,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss" >
 .register {
   min-height: 100%;
   background: #f9f9f9;

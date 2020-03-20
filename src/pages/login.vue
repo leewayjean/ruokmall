@@ -107,7 +107,7 @@ export default {
   }
 };
 </script>
-<style lang="scss" scoped>
+<style lang="scss" >
 .login {
   header {
     height: 112px;

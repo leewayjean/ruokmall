@@ -1,36 +1,58 @@
 <template>
   <div class="detail">
-    <product-params></product-params>
+    <product-params :productName='product.name' v-if="product.name"></product-params>
     <div class="container">
+        <!-- 商品轮播 -->
       <div class="swiper-box">
         <swiper :options="swiperOption">
           <swiper-slide v-for="(item,index) in subImages" :key="index">
-              <img v-lazy="item" alt="">
+            <img v-lazy="item" alt />
           </swiper-slide>
           <div class="swiper-pagination" slot="pagination"></div>
           <div class="swiper-btn swiper-button-prev" slot="button-prev"></div>
           <div class="swiper-btn swiper-button-next" slot="button-next"></div>
         </swiper>
       </div>
+      <!-- 商品选项 -->
       <div class="product-detail-box">
-        <h3 class="product-name">小米8</h3>
-        <p
-          class="product-subtitle"
-        >相机全新升级 / 960帧超慢动作 / 手持超级夜景 / 全球首款双频GPS / 骁龙845处理器 / 红 外人脸解锁 / AI变焦双摄 / 三星 AMOLED 屏</p>
+        <h3 class="product-name">{{product.name}}</h3>
+        <p class="product-subtitle">{{product.subtitle}}</p>
         <p class="owner">小米自营</p>
         <p class="product-price">
-          <span class="price-discount">2599元</span>
-          <span class="price">2599元</span>
+          <span class="price-discount">{{product.price}}元</span>
+          <span class="price" v-if="product.discount">2599元</span>
         </p>
+        <!-- 地址 -->
         <div class="address-box"></div>
+        <!-- 版本 颜色 -->
         <h5>选择版本</h5>
         <div class="options">
-          <span class="options-item is-selected">6+64</span>
-          <span class="options-item">4+64g</span>
+          <ul>
+            <li
+              class="options-item"
+              :class="{'is-selected':isSelected === index}"
+              @click="isSelected = index"
+              v-for="(item,index) in options"
+              :key="index"
+            >
+              <span class="name">{{item.name}}</span>
+              <span class="price">{{item.price}}</span>
+            </li>
+          </ul>
         </div>
         <h5>选择颜色</h5>
         <div class="options">
-          <span class="options-item is-selected">白色</span>
+          <ul>
+            <li
+              class="options-item"
+              :class="{'is-selected':selectedColor === index}"
+              @click="selectedColor = index"
+              v-for="(item,index) in colorOptions"
+              :key="index"
+            >
+              <span class="name">{{item.color}}</span>
+            </li>
+          </ul>
         </div>
         <div class="selected-box">
           <p class="product-info">
@@ -45,6 +67,15 @@
         </div>
       </div>
     </div>
+    <div class="tips-box">
+      <div class="wrapper">
+        <h3>价格说明</h3>
+        <p>
+          <strong>划线价:</strong>
+          商品展示的划线价格为参考价，该价格可能时品牌专柜标价、商品吊牌价。
+        </p>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -55,34 +86,80 @@ export default {
   name: "detail",
   data() {
     return {
+      id: this.$route.params.id,
+      isSelected: 0, //选择的规格
+      selectedColor: 0, //选择的颜色
       // swiper配置参数
       swiperOption: {
+        allowTouchMove: false,
+        speed: 500,
+        effect: "fade",
+        fadeEffect: {
+          crossFade: true
+        },
         navigation: {
           nextEl: ".swiper-button-next",
           prevEl: ".swiper-button-prev"
         },
         pagination: {
           el: ".swiper-pagination",
-          clickable: true
+          clickable: true,
+          bulletClass: "my-bullet",
+          bulletActiveClass: "my-bullet-active"
         },
-        loop: true,
-        autoplay: true
+        autoplay: {
+          delay: 3000,
+          stopOnLastSlide: false,
+          disableOnInteraction: false
+        }
         // some swiper options/callbacks
         // 所有的参数同 swiper 官方 api 参数
         // ...
       },
-      subImages:['/imgs/subImages/sub-img-2.jpg','/imgs/subImages/sub-img-1.jpg','/imgs/subImages/sub-img-3.jpg']
+      subImages: [
+        "/imgs/subImages/sub-img-2.jpg",
+        "/imgs/subImages/sub-img-3.jpg",
+        "/imgs/subImages/sub-img-1.jpg"
+      ],
+      //   规格
+      options: [
+        {
+          name: "12GB+512GB ",
+          price: "5999元 "
+        },
+        {
+          name: "8GB+256GB ",
+          price: "4999元"
+        },
+        {
+          name: "8GB+256GB ",
+          price: "4999元"
+        }
+      ],
+      //   颜色
+      colorOptions: [
+        {
+          color: "红色 ",
+          hex: "f00 "
+        },
+        {
+          color: "绿色 ",
+          hex: "#0f0"
+        }
+      ],
+      product: {}
     };
   },
   methods: {
     getProduct() {
-      this.$axios.get("/products/" + 3).then(res => {
+      this.$axios.get("/products/" + this.id).then(res => {
         console.log(res);
+        this.product = res;
       });
     }
   },
   mounted() {
-    // this.getProduct();
+    this.getProduct();
   },
   components: {
     ProductParams,
@@ -91,13 +168,14 @@ export default {
   }
 };
 </script>
-<style lang="scss" scoped>
+<style lang="scss" >
 .detail {
   .container {
     width: 1226px;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
+    padding-bottom: 50px;
     .swiper-box {
       width: 560px;
       height: 560px;
@@ -105,46 +183,75 @@ export default {
       .swiper-container {
         position: relative;
         height: inherit;
-        img[lazy=loading]{
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%,-50%);
+        img[lazy="loading"] {
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%);
         }
-        img[lazy=loaded]{
-            width: 100%;
-            height: 100%;
+        img[lazy="loaded"] {
+          width: 100%;
+          height: 100%;
         }
+        // 分页器
+        .swiper-pagination {
+          left: 50%;
+          bottom: 20px;
+          transform: translate(-50%, 0);
+          display: inline-block;
+          width: auto;
+          .my-bullet {
+            display: inline-block;
+            margin: 0 5px;
+            background: #ccc;
+            width: 50px;
+            border-radius: 0;
+            border: 0;
+            height: 2px;
+            outline: none;
+            cursor: pointer;
+            &.my-bullet-active {
+              background: #a3a3a3;
+            }
+          }
+        }
+        // 切换按钮
         .swiper-btn {
           color: #f5f5f5;
           width: 41px;
           height: 69px;
-          background: url(../assets/img/index/icon-arrow.png) no-repeat;
-          background-size: 18px;
-          background-position: center;
+          background: url(/imgs/slider/icon-slides.png) no-repeat;
+          background-size: auto 69px;
           background-color: rgba($color: #000000, $alpha: 0);
-          &:hover {
-            background-color: rgba($color: #000000, $alpha: 0.5);
+          &.swiper-button-prev {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            border-top-right-radius: 2px;
+            border-bottom-right-radius: 2px;
+            background-position: -84px top;
+            &:hover {
+              background-position: left top;
+            }
           }
-        }
-        .swiper-button-prev {
-          position: absolute;
-          left: 0;
-          top: 50%;
-          border-top-left-radius: 2px;
-          border-bottom-left-radius: 2px;
-          transform: rotateY(180deg);
-        }
-        .swiper-button-next {
-          right: 0;
-          top: 50%;
-          border-top-left-radius: 2px;
-          border-bottom-left-radius: 2px;
+          &.swiper-button-next {
+            right: 0;
+            top: 50%;
+            background-position: -124px top;
+            border-top-left-radius: 2px;
+            border-bottom-left-radius: 2px;
+            &:hover {
+              background-position: -41px top;
+            }
+          }
+          &:focus {
+            outline: none;
+          }
         }
       }
     }
     .product-detail-box {
-      width: 586px;
+      width: 606px;
       .product-name {
         font-size: 24px;
         font-weight: normal;
@@ -176,26 +283,43 @@ export default {
         }
       }
       h5 {
-        padding: 30px 0 20px;
+        padding: 30px 0px 0px;
         font-size: 18px;
         color: #333;
       }
       .options {
         display: flex;
         justify-content: space-between;
-        .options-item {
-          display: inline-block;
-          width: 287px;
-          height: 50px;
-          border: 1px solid #e0e0e0;
-          text-align: center;
-          line-height: 50px;
-          font-size: 16px;
-          color: #333;
-        }
-        .is-selected {
-          border-color: #f60;
-          color: #f60;
+        ul {
+          width: 100%;
+          display: flex;
+          justify-content: space-between;
+          flex-wrap: wrap;
+          .options-item {
+            box-sizing: border-box;
+            width: 298px;
+            height: 50px;
+            border: 1px solid #e0e0e0;
+            text-align: center;
+            line-height: 50px;
+            font-size: 16px;
+            color: #333;
+            cursor: pointer;
+            margin-top: 15px;
+            .name {
+              padding: 0 30px;
+            }
+            .price {
+              color: #b0b0b0;
+            }
+          }
+          .is-selected {
+            border-color: #f60;
+            color: #f60;
+            .price {
+              color: #757575;
+            }
+          }
         }
       }
       .selected-box {
@@ -225,6 +349,7 @@ export default {
           background-color: #f60;
           margin-right: 21px;
           text-align: center;
+          cursor: pointer;
         }
         .btn-like {
           display: inline-block;
@@ -232,6 +357,31 @@ export default {
           height: 54px;
           text-align: center;
           background-color: #b0b0b0;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+  .tips-box {
+    background-color: #f5f5f5;
+    padding-bottom: 50px;
+    .wrapper {
+      width: 1226px;
+      margin: 0 auto;
+      h3 {
+        font-size: 22px;
+        color: #333;
+        padding: 22px 0;
+        font-weight: normal;
+      }
+      p {
+        padding: 40px 88px;
+        background-color: #fff;
+        font-size: 16px;
+        color: #757575;
+        line-height: 40px;
+        strong {
+          color: #333;
         }
       }
     }

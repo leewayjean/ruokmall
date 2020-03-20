@@ -60,7 +60,7 @@ export default {
   }
 };
 </script>
-<style lang="scss" scoped>
+<style lang="scss" >
 .modal {
   position: fixed;
   left: 0;

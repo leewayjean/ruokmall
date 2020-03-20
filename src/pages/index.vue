@@ -91,23 +91,28 @@ export default {
     return {
       // swiper配置参数
       swiperOption: {
-        effect: "cube",
+        allowTouchMove: false,
+        speed: 1000,
+        effect: "fade",
+        fadeEffect: {
+          crossFade: true
+        },
         navigation: {
           nextEl: ".swiper-button-next",
           prevEl: ".swiper-button-prev"
         },
         pagination: {
           el: ".swiper-pagination",
-          clickable: true
-        },
-        cubeEffect: {
-          slideShadows: true,
-          shadow: true,
-          shadowOffset: 100,
-          shadowScale: 0.6
+          clickable: true,
+          bulletClass: "my-bullet",
+          bulletActiveClass: "my-bullet-active"
         },
         loop: true,
-        autoplay: true
+        autoplay: {
+          delay: 3000,
+          stopOnLastSlide: false,
+          disableOnInteraction: false
+        }
         // some swiper options/callbacks
         // 所有的参数同 swiper 官方 api 参数
         // ...
@@ -693,7 +698,7 @@ export default {
       let phoneList = [];
       phoneList.push(res.list.slice(0, 4), res.list.slice(4, 8));
       this.phoneList = phoneList;
-      console.log(this.phoneList)
+      console.log(this.phoneList);
     });
   },
   components: {
@@ -702,7 +707,7 @@ export default {
   }
 };
 </script>
-<style lang="scss" scoped>
+<style lang="scss" >
 .index {
   // 菜单与banner部分
   .menu-banner-area {
@@ -794,29 +799,64 @@ export default {
           width: 100%;
           height: 451px;
           .swiper-container {
+            position: relative;
+            // 分页器
+            .swiper-pagination {
+              display: inline-block;
+              position: absolute;
+              left: auto;
+              right: 30px;
+              bottom: 20px;
+              width: auto;
+              .my-bullet {
+                display: inline-block;
+                margin: 0 4px;
+                width: 6px;
+                height: 6px;
+                border: 2px solid #fff;
+                border-color: hsla(0, 0%, 100%, 0.3);
+                border-radius: 10px;
+                overflow: hidden;
+                background: rgba(0, 0, 0, 0.4);
+                opacity: 1;
+                outline: none;
+                cursor: pointer;
+                &.my-bullet-active {
+                  background: hsla(0, 0%, 100%, 0.4);
+                  border-color: rgba(0, 0, 0, 0.4);
+                }
+              }
+            }
+            // 切换按钮
             .swiper-btn {
               color: #f5f5f5;
               width: 41px;
               height: 69px;
-              background: url(../assets/img/index/icon-arrow.png) no-repeat;
-              background-size: 18px;
-              background-position: center;
+              background: url(/imgs/slider/icon-slides.png) no-repeat;
+              background-size: auto 69px;
               background-color: rgba($color: #000000, $alpha: 0);
-              &:hover {
-                background-color: rgba($color: #000000, $alpha: 0.5);
+              &.swiper-button-prev {
+                position: absolute;
+                left: 234px;
+                border-top-right-radius: 2px;
+                border-bottom-right-radius: 2px;
+                background-position: -84px top;
+                &:hover {
+                  background-position: left top;
+                }
               }
-            }
-            .swiper-button-prev {
-              position: absolute;
-              left: 234px;
-              border-top-left-radius: 2px;
-              border-bottom-left-radius: 2px;
-              transform: rotateY(180deg);
-            }
-            .swiper-button-next {
-              right: 0;
-              border-top-left-radius: 2px;
-              border-bottom-left-radius: 2px;
+              &.swiper-button-next {
+                right: 0;
+                background-position: -124px top;
+                border-top-left-radius: 2px;
+                border-bottom-left-radius: 2px;
+                &:hover {
+                  background-position: -41px top;
+                }
+              }
+              &:focus{
+                outline: none;
+              }
             }
           }
           img {

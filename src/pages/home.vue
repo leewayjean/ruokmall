@@ -60,7 +60,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss" >
 .content-wrapper {
   .tips {
     font-size: 14px;
