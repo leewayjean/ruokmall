@@ -1,8 +1,8 @@
 <template>
   <div class="detail">
-    <product-params :productName='product.name' v-if="product.name"></product-params>
+    <product-params :productName="product.name" v-if="product.name"></product-params>
     <div class="container">
-        <!-- 商品轮播 -->
+      <!-- 商品轮播 -->
       <div class="swiper-box">
         <swiper :options="swiperOption">
           <swiper-slide v-for="(item,index) in subImages" :key="index">
@@ -62,7 +62,7 @@
           <p class="total-price">总计：1999元</p>
         </div>
         <div class="addCart-box">
-          <span class="btn-add">加入购物车</span>
+          <span class="btn-add" @click="addToCart">加入购物车</span>
           <span class="btn-like">收藏</span>
         </div>
       </div>
@@ -153,9 +153,20 @@ export default {
   methods: {
     getProduct() {
       this.$axios.get("/products/" + this.id).then(res => {
-        console.log(res);
         this.product = res;
       });
+    },
+    addToCart() {
+      this.$axios
+        .post("/carts", {
+          productId: this.id,
+          selected: true
+        })
+        .then(res => {
+          // 添加购物车成功
+          this.$store.dispatch('saveCartCount',res.cartTotalQuantity)
+          this.$router.push('/buySuccess')
+        });
     }
   },
   mounted() {

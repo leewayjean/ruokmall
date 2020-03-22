@@ -15,11 +15,13 @@ export default {
       this.$store.dispatch("saveUserName", res.username);
     });
     getCartCount().then(res => {
+      console.log(res);
+      console.log(typeof res);
       //未登录时，接口返回不是数字类型时，设置为0
-      if (typeof res !== Number) {
-        this.$store.dispatch("getCartCount", 0);
+      if (typeof res !== "number") {
+        this.$store.dispatch("saveCartCount", 0);
       } else {
-        this.$store.dispatch("getCartCount", res);
+        this.$store.dispatch("saveCartCount", res);
       }
     });
   }
@@ -29,5 +31,15 @@ export default {
 @import "./assets/scss/normalize.scss";
 #app {
   height: 100%;
+}
+
+//设置进度条加载样式 
+#nprogress {
+  & .bar {
+    background-color: #ff6700 !important;
+    & .peg {
+      box-shadow: 0 0 10px #f60, 0 0 5px #f60;
+    }
+  }
 }
 </style>

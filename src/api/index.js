@@ -24,3 +24,8 @@ export const getUserInfo = () => {
 export const getCartCount = () =>{
     return axios.get('/carts/products/sum');
 }
+
+// 获取购物车列表
+export const getCartList = () =>{
+    return axios.get('/carts');
+}

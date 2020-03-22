@@ -82,9 +82,7 @@
     <div class="nav-header">
       <div class="container">
         <!-- logo -->
-        <div class="header-logo">
-          <a href="/#/" class="icon-logo"></a>
-        </div>
+        <Logo/>
         <!-- 导航菜单 -->
         <ul class="header-menu">
           <li class="menu-item">
@@ -135,6 +133,7 @@
 </template>
 <script>
 import { getProductList } from "../api/index";
+import Logo from './Logo'
 export default {
   name: "nav-header",
   data() {
@@ -150,6 +149,9 @@ export default {
     cartCount() {
       return this.$store.state.cartCount;
     }
+  },
+  components:{
+    Logo
   },
   mounted() {
     const searchInput = document.querySelector(".search-input");

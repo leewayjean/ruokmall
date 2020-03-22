@@ -5,6 +5,7 @@ import Home from '../pages/home'
 import Index from '../pages/index'
 import Product from '../pages/product'
 import Detail from '../pages/detail'
+import buySuccess from '../pages/buySuccess'
 
 //订单列表 、订单确认、订单支付
 import Order from '../pages/order'
@@ -49,6 +50,11 @@ const router = new VueRouter({
                     path: 'detail/:id',
                     name: 'detail',
                     component: Detail
+                },
+                {
+                    path:'buySuccess',
+                    name:'buySuccess',
+                    component:buySuccess
                 }
             ]
         },
