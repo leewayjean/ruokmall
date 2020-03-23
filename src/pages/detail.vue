@@ -1,6 +1,6 @@
 <template>
   <div class="detail">
-    <product-params :productName="product.name" v-if="product.name"></product-params>
+    <product-params :productName="product.name" v-if="product.name" :btnShow="false"></product-params>
     <div class="container">
       <!-- 商品轮播 -->
       <div class="swiper-box">

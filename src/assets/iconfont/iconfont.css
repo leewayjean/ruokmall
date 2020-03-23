@@ -1,0 +1,33 @@
+@font-face {font-family: "iconfont";
+  src: url('iconfont.eot?t=1584948639472'); /* IE9 */
+  src: url('iconfont.eot?t=1584948639472#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('data:application/x-font-woff2;charset=utf-8;base64,d09GMgABAAAAAAO4AAsAAAAACCgAAANrAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHEIGVgCDMgqDSIJ7ATYCJAMUCwwABCAFhG0HRhsFB8iemjxBhAgoAJOtDABHPB6+X3s998H+zdsAcSvreXxVPauoWtRAwlV4ljG+48vC51KXbYBYM+mAoUK0Vz4fyZF1VIWgDncPiHW+/Q4A27/5vyYdnVZQ8fGB9ep5pA2nVwGyNf4EXAhMbPH7P/fzdWkNlteezaWaKpI22plNRwk0m0Xkjyb7HxT/MHYTQUO8TKDZlMXjVktXL/grwKxAnKnKFPhnVEpDduiFrmJjER/AR59eeh4A7/nfxz8F4U9SM7Dw9qNmGep+yu+p15x7zihFgWA6A4xtZFwGCvG40nTGKwpd5qV5w71dA5pekqbqZ71P3lO3m0R8IGWDclP84yWF6IDMcXBNDhd+yhgh89NCCH4mCImfVPhhLqqgYcAL4COohH0DwkhIsx4BcOBivEdkcPCT7Z6TKbkWpjxuDaKykx0C9+4N3+zTv2aBc9GTV8Eb95XxwOOnM8IGvb4nj4UcO5XC5QZ+EEcaCN6okjj50mPoLvXuvsyREVH9qBO1bwukXI7yZorGPhD3c9xKYS/Q7YwMXrdySju1UEAOy2tK3t+/Iv0WKb1o8I5pCaFVSsEnvSXVXmmvwgcc5NeMo6ODvi7o2+2PcKVe7Uow1z6v5ER4b3irR3ZkxksYgekIp8L/m+bdzBc+P2TlQvEnw5ronF36PWUX/opzfPivaY7N094Xvk/tnVspIn5Nqnf6h2ZwAqPzuScHuMiPcz240x56zgCQ/ifzz5xkbbSqTYRV/fMfHqLpx2PlyV0XBYaFe4nOgl8n6FhVfBFQ1+KWY747rrrJDySjqeGH2WY9n0a50DmT0FtIIBnZgKy3jy74y1ANrkCndxWaS1q3D+ZwXqKM4dSyBGHaBUgmnUM27Qm64J9BtegbdKbDC5o7EXXg4DDUwEaOUwJlMu0iqsSsFGlFoMjuRsVmnuJpEaf1I9dVL8nPyctHW9GKfIolul0pEIISypmFtEjXodnMiMaZESWRYxBCq8jNpVU/lCMxCwS6iUNTBCQjprkQKgljRWljIbDw+92QwsZsCm+o6LH3Q5xO7Z3IlyOvA7pVbu1UcStv0dkpCggCRVAcY0G0SAZkhiGG0KrHGSGJkMMwIKCpkKvUol3lOcsrLe+4CxpwUI0UOUrU6NS7nDOHdyOLEz5cVQxasmRmOgIAAA==') format('woff2'),
+  url('iconfont.woff?t=1584948639472') format('woff'),
+  url('iconfont.ttf?t=1584948639472') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */
+  url('iconfont.svg?t=1584948639472#iconfont') format('svg'); /* iOS 4.1- */
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-arrow:before {
+  content: "\e625";
+}
+
+.icon-Cart:before {
+  content: "\e64f";
+}
+
+.icon-right:before {
+  content: "\e619";
+}
+
+.icon-close:before {
+  content: "\e6ac";
+}
+

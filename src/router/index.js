@@ -29,7 +29,7 @@ const router = new VueRouter({
             path:'*',
             redirect:'/'
         },
-        //首页 、产品页 、详情页
+        //首页 、产品页 、详情页 、加购物车成功页
         {
             path: '/',
             name: 'home',
@@ -82,16 +82,19 @@ const router = new VueRouter({
 
             ]
         },
+        // 购物车
         {
             path:'/cart',
             name:'cart',
             component:Cart
         },
+        // 登录
         {
             path:'/login',
             name:'login',
             component:Login 
         },
+        // 注册
         {
             path:'/register',
             name:'register',

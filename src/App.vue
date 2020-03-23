@@ -29,17 +29,8 @@ export default {
 </script>
 <style lang="scss" >
 @import "./assets/scss/normalize.scss";
+@import "./assets/iconfont/iconfont.css";
 #app {
   height: 100%;
-}
-
-//设置进度条加载样式 
-#nprogress {
-  & .bar {
-    background-color: #ff6700 !important;
-    & .peg {
-      box-shadow: 0 0 10px #f60, 0 0 5px #f60;
-    }
-  }
 }
 </style>

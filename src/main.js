@@ -5,7 +5,7 @@ import axios from 'axios'
 import VueLazyload from 'vue-lazyload'
 import store from './store'
 import NProgress from 'nprogress'
-import 'nprogress/nprogress.css'
+import './assets/nprogress/nprogress.css'
 
 
 

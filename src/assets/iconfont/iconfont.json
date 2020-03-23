@@ -1,0 +1,37 @@
+{
+  "id": "1708544",
+  "name": "mi-mall",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "831601",
+      "name": "arrow",
+      "font_class": "arrow",
+      "unicode": "e625",
+      "unicode_decimal": 58917
+    },
+    {
+      "icon_id": "9568069",
+      "name": "Cart",
+      "font_class": "Cart",
+      "unicode": "e64f",
+      "unicode_decimal": 58959
+    },
+    {
+      "icon_id": "10147128",
+      "name": "right",
+      "font_class": "right",
+      "unicode": "e619",
+      "unicode_decimal": 58905
+    },
+    {
+      "icon_id": "11553523",
+      "name": "close",
+      "font_class": "close",
+      "unicode": "e6ac",
+      "unicode_decimal": 59052
+    }
+  ]
+}

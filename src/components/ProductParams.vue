@@ -11,7 +11,7 @@
           <a href="javascript:;">参数</a>
           <span class="split">|</span>
           <a href="javascript:;">用户评价</a>
-          <span class="btn-buy" @click="$emit('btn-click')">立即购买</span>
+          <span class="btn-buy" @click="$emit('btn-click')" v-if="btnShow">立即购买</span>
         </div>
       </div>
     </div>
@@ -27,7 +27,7 @@
           <a href="javascript:;">参数</a>
           <span class="split">|</span>
           <a href="javascript:;">用户评价</a>
-          <span class="btn-buy" @click="$emit('btn-click')">立即购买</span>
+          <span class="btn-buy" @click="$emit('btn-click')" v-if="btnShow">立即购买</span>
         </div>
       </div>
     </div>
@@ -45,6 +45,10 @@ export default {
   props:{
     productName:{
       type:String
+    },
+    btnShow:{
+      type:Boolean,
+      default:true
     }
   },
   mounted() {

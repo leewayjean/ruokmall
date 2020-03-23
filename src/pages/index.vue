@@ -800,6 +800,9 @@ export default {
           height: 451px;
           .swiper-container {
             position: relative;
+            .swiper-wrapper a{
+              display: inline-block;
+            }
             // 分页器
             .swiper-pagination {
               display: inline-block;
