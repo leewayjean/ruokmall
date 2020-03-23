@@ -12,6 +12,10 @@ export const getProductList = (params) => {
     })
 }
 
+export const getProductDetail = (id) =>{
+    return axios.get(`/products/${id}`)
+}
+
 // 获取登录用户信息
 export const getUserInfo = () => {
     return axios.get('/user');

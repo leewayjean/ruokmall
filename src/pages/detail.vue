@@ -56,10 +56,10 @@
         </div>
         <div class="selected-box">
           <p class="product-info">
-            <span class="name">小米4+64g</span>
-            <span class="price">1999</span>
+            <span class="name">{{product.name}}</span>
+            <span class="price">{{product.price}}元</span>
           </p>
-          <p class="total-price">总计：1999元</p>
+          <p class="total-price">总计：{{product.price}}元</p>
         </div>
         <div class="addCart-box">
           <span class="btn-add" @click="addToCart">加入购物车</span>
@@ -80,6 +80,7 @@
 </template>
 <script>
 import "swiper/dist/css/swiper.css";
+import {getProductDetail} from '../api'
 import { swiper, swiperSlide } from "vue-awesome-swiper";
 import ProductParams from "../components/ProductParams";
 export default {
@@ -152,7 +153,7 @@ export default {
   },
   methods: {
     getProduct() {
-      this.$axios.get("/products/" + this.id).then(res => {
+      getProductDetail(this.id).then(res => {
         this.product = res;
       });
     },
@@ -165,7 +166,7 @@ export default {
         .then(res => {
           // 添加购物车成功
           this.$store.dispatch('saveCartCount',res.cartTotalQuantity)
-          this.$router.push('/buySuccess')
+          this.$router.push(`/buySuccess/${this.id}`);
         });
     }
   },

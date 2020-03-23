@@ -5,17 +5,33 @@
         <img src="/imgs/slider/success.png" alt />
         <div>
           <h3>已成功加入购物车！</h3>
-          <p>兄奥秘手表Color 典雅黑</p>
+          <p>{{productName}}</p>
         </div>
       </div>
       <div class="btn-group">
-        <router-link class="btn btn-gray"  tag='span' to='$router.go(-1);'>返回上一级</router-link>
+        <span class="btn btn-gray"   @click="$router.go(-1)">返回上一级</span>
         <router-link class="btn btn-primary" tag='span' to='/cart'>去购物车结算</router-link>
       </div>
     </div>
   </div>
 </template>
-
+<script>
+import {getProductDetail} from '../api'
+export default {
+  name:'buy-scuuess',
+  data(){
+    return{
+      id:this.$route.params.id,
+      productName:''
+    }
+  },
+  mounted(){
+    getProductDetail(this.id).then(res =>{
+      this.productName = res.name;
+    })
+  }
+}
+</script>
 <style lang="scss">
 .buy-success {
   background-color: #f5f5f5;

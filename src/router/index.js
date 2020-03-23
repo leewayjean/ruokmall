@@ -52,7 +52,7 @@ const router = new VueRouter({
                     component: Detail
                 },
                 {
-                    path:'buySuccess',
+                    path:'buySuccess/:id',
                     name:'buySuccess',
                     component:buySuccess
                 }

@@ -7,7 +7,10 @@
         <p class="tips">温馨提示：产品是否购买成功，以最终下单为准，请尽快结算</p>
       </div>
       <div class="user-wrapper">
-        <a class="username" href="javascript:;">leewayjean</a>
+        <a class="username" href="javascript:;">
+          leewayjean
+          <i class="iconfont icon-arrow"></i>
+        </a>
         <span class="split">|</span>
         <a href="javascript:;">我的订单</a>
       </div>
@@ -41,25 +44,38 @@ export default {
       justify-content: flex-start;
       align-items: center;
       h2 {
-          font-size: 28px;
-          color: #424242;
+        font-size: 28px;
+        color: #424242;
         margin-left: 35px;
       }
-      p{
-          margin-left: 15px;
+      p {
+        margin-left: 15px;
       }
     }
     .user-wrapper {
       display: flex;
       justify-content: flex-start;
       align-items: center;
-      .split{
-          margin: 0 4px;
+      .split {
+        margin: 0 4px;
       }
-      a{
-          font-size: 12px;
-          color: #757575;
-          text-decoration: none;
+      a {
+        font-size: 12px;
+        color: #757575;
+      }
+      .username {
+        padding-right: 8px;
+        .icon-arrow {
+          font-size: 10px;
+          color: #000;
+          font-weight: bold;
+        }
+        &:hover {
+          color: #ff6700;
+          .icon-arrow {
+            color: #ff6700;
+          }
+        }
       }
     }
   }

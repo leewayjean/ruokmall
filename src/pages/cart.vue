@@ -6,7 +6,7 @@
         <!-- 购物车列表头 -->
         <div class="cart-list-header">
           <div class="col col-check">
-            <span class="btn-check" :class="{'checked':selectedAll}">
+            <span class="btn-check" :class="{'checked':selectedAll}" @click="selectedAllClick">
               <i class="iconfont icon-right"></i>
             </span> 全选
           </div>
@@ -27,7 +27,7 @@
             </div>
             <div class="col col-img">
               <a href>
-                <img :src="listItem.productMainImage" alt />
+                <img v-lazy="listItem.productMainImage" alt />
               </a>
             </div>
             <div class="col col-name">
@@ -42,7 +42,11 @@
               </div>
             </div>
             <div class="col col-total">{{listItem.productTotalPrice}}元</div>
-            <div class="col col-action">x</div>
+            <div class="col col-action">
+              <span class="btn-delete">
+                <i class="iconfont icon-close"></i>
+              </span>
+            </div>
           </li>
         </ul>
         <!-- 购物车脚部 -->
@@ -85,15 +89,26 @@ export default {
       selectedQuantity: 0 // 已选择件数
     };
   },
-  methods: {},
-  created() {
+  methods: {
+    // 全选按钮点击
+    selectedAllClick() {
+      let url = this.selectedAll?'/carts/unSelectAll':'/carts/selectAll';
+      this.$axios.put(url).then(res => {
+        this.renderCart(res);
+      });
+    },
+    // 渲染购物车数据函数
+    renderCart(res) {
+      this.cartList = res.cartProductVoList;
+      this.cartTotalQuantity = res.cartTotalQuantity;
+      this.selectedAll = res.selectedAll;
+      this.cartTotalPrice = res.cartTotalPrice;
+    }
+  },
+  mounted() {
     getCartList()
       .then(res => {
-        console.log(res);
-        this.cartList = res.cartProductVoList;
-        this.cartTotalQuantity = res.cartTotalQuantity;
-        this.selectedAll = res.selectedAll;
-        this.cartTotalPrice = res.cartTotalPrice;
+        this.renderCart(res)
       })
       .catch(err => {
         alert(err);
@@ -135,16 +150,16 @@ export default {
             margin: 0 15px 0 24px;
             color: #fff;
             font-weight: bold;
-            transition: color .3s;
+            transition: color 0.3s;
             cursor: pointer;
-            &:hover{
-                color: #424242;
+            &:hover {
+              color: #424242;
             }
             &.checked {
               background-color: #f60 !important;
               border: none !important;
-              &:hover{
-                  color: #fff;
+              &:hover {
+                color: #fff;
               }
             }
           }
@@ -211,6 +226,10 @@ export default {
                 font-size: 20px;
                 color: #757575;
                 font-weight: bold;
+                cursor: pointer;
+                &:hover {
+                  background-color: #e0e0e0;
+                }
               }
               .num {
                 display: inline-block;
@@ -225,8 +244,23 @@ export default {
             color: #ff6700;
           }
           .col-action {
-            font-size: 16x;
-            color: #757575;
+            .btn-delete {
+              width: 24px;
+              height: 24px;
+              border-radius: 50%;
+              font-size: 20px;
+              text-align: center;
+              line-height: 24px;
+              cursor: pointer;
+              transition: background-color 0.4s;
+              .icon-close {
+                font-size: 20px;
+              }
+              &:hover {
+                color: #fff;
+                background-color: #e53935;
+              }
+            }
           }
         }
       }
@@ -276,9 +310,15 @@ export default {
           font-size: 18px;
           color: #e0e0e0;
           margin-left: 50px;
+          cursor: pointer;
+          transition: background-color 0.4s;
           &.active {
             color: #fff;
             background-color: #ff6700;
+            &:hover {
+              background-color: #f25807;
+              border-color: #f25807;
+            }
           }
         }
       }
