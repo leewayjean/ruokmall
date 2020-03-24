@@ -107,6 +107,10 @@ export default {
           background-color: #f60;
           cursor: pointer;
           margin-left: 15px;
+          transition: background-color .4s;
+          &:hover{
+            background-color: #f25807;
+          }
         }
       }
     }

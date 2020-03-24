@@ -36,7 +36,6 @@ export default {
     },
     getProduct() {
       getProductDetail(this.id).then(res => {
-        console.log(res);
         this.product = res;
       });
     }

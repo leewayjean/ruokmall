@@ -21,7 +21,11 @@
         <ul class="cart-list-body">
           <li class="cart-list-item" v-for="(listItem,index) in cartList" :key="index">
             <div class="col col-check">
-              <span class="btn-check" :class="{'checked':listItem.productSelected}">
+              <span
+                class="btn-check"
+                :class="{'checked':listItem.productSelected}"
+                @click="selectedProduct(listItem.productId,listItem.productSelected)"
+              >
                 <i class="iconfont icon-right"></i>
               </span>
             </div>
@@ -36,14 +40,20 @@
             <div class="col col-price">{{listItem.productPrice}}元</div>
             <div class="col col-amount">
               <div class="count">
-                <span class="btn minus">-</span>
-                <span class="num">{{listItem.quantity}}</span>
-                <span class="btn plus">+</span>
+                <span
+                  class="btn minus"
+                  @click="decreaseProduct(listItem.productId,listItem.quantity)"
+                >-</span>
+                <input class="num" v-model="listItem.quantity" @blur="changeQuantity(listItem.productId,listItem.quantity)">
+                <span
+                  class="btn plus"
+                  @click="increaseProduct(listItem.productId,listItem.quantity)"
+                >+</span>
               </div>
             </div>
             <div class="col col-total">{{listItem.productTotalPrice}}元</div>
             <div class="col col-action">
-              <span class="btn-delete">
+              <span class="btn-delete" @click="removeProduct(listItem.productId)">
                 <i class="iconfont icon-close"></i>
               </span>
             </div>
@@ -90,16 +100,63 @@ export default {
     };
   },
   methods: {
+    // 修改单个商品数量
+    changeQuantity(productId,quantity){
+      this.$axios
+        .put("/carts/" + productId, {
+          quantity:quantity
+        })
+        .then(res => {
+          this.renderCart(res);
+        });
+    },
+    // 商品减一
+    decreaseProduct(productId, quantity) {
+      if (quantity === 1) return;
+      this.$axios
+        .put("/carts/" + productId, {
+          quantity: --quantity
+        })
+        .then(res => {
+          this.renderCart(res);
+        });
+    },
+    // 商品加一
+    increaseProduct(productId, quantity) {
+      this.$axios
+        .put("/carts/" + productId, {
+          quantity: ++quantity
+        })
+        .then(res => {
+          this.renderCart(res);
+        });
+    },
+    // 选择商品
+    selectedProduct(productId, productSelected) {
+      this.$axios
+        .put("/carts/" + productId, {
+          selected: !productSelected
+        })
+        .then(res => {
+          this.renderCart(res);
+        });
+    },
+    // 移除商品
+    removeProduct(id) {
+      this.$axios.delete("/carts/" + id).then(res => {
+        this.renderCart(res);
+      });
+    },
     // 全选按钮点击
     selectedAllClick() {
-      let url = this.selectedAll?'/carts/unSelectAll':'/carts/selectAll';
+      let url = this.selectedAll ? "/carts/unSelectAll" : "/carts/selectAll";
       this.$axios.put(url).then(res => {
         this.renderCart(res);
       });
     },
     // 渲染购物车数据函数
     renderCart(res) {
-      this.cartList = res.cartProductVoList;
+      this.cartList = res.cartProductVoList || [];
       this.cartTotalQuantity = res.cartTotalQuantity;
       this.selectedAll = res.selectedAll;
       this.cartTotalPrice = res.cartTotalPrice;
@@ -108,7 +165,7 @@ export default {
   mounted() {
     getCartList()
       .then(res => {
-        this.renderCart(res)
+        this.renderCart(res);
       })
       .catch(err => {
         alert(err);
@@ -214,6 +271,7 @@ export default {
           }
           .col-amount {
             .count {
+              display: flex;
               width: 148px;
               height: 38px;
               line-height: 38px;
@@ -232,7 +290,9 @@ export default {
                 }
               }
               .num {
-                display: inline-block;
+                text-align: center;
+                outline: none;
+                border: none;
                 width: 72px;
                 font-size: 16px;
                 color: #424242;

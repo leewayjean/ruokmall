@@ -66,12 +66,12 @@
             <div class="product-list">
               <ul v-for="(phone,index) in phoneList" :key="index">
                 <li class="product-list-item" v-for="(item,index) in phone" :key="index">
-                  <a href="javascript:;">
+                  <router-link :to="'/product/'+item.id">
                     <img v-lazy="item.mainImage" alt />
                     <p class="product-name">{{item.name}}</p>
                     <p class="product-subtitle">{{item.subtitle}}</p>
                     <p class="product-price">{{item.price}}元起</p>
-                  </a>
+                  </router-link>
                 </li>
               </ul>
             </div>
@@ -136,7 +136,7 @@ export default {
           img: "/imgs/slider/slide-4.jpg"
         },
         {
-          id: "22",
+          id: "33",
           img: "/imgs/slider/slide-5.jpg"
         }
       ],
@@ -698,7 +698,7 @@ export default {
       let phoneList = [];
       phoneList.push(res.list.slice(0, 4), res.list.slice(4, 8));
       this.phoneList = phoneList;
-      console.log(this.phoneList);
+      console.log(phoneList)
     });
   },
   components: {

@@ -362,6 +362,10 @@ export default {
           margin-right: 21px;
           text-align: center;
           cursor: pointer;
+          transition: background-color .4s;
+          &:hover{
+            background-color: #f25807;
+          }
         }
         .btn-like {
           display: inline-block;

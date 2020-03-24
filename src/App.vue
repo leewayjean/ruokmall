@@ -15,8 +15,6 @@ export default {
       this.$store.dispatch("saveUserName", res.username);
     });
     getCartCount().then(res => {
-      console.log(res);
-      console.log(typeof res);
       //未登录时，接口返回不是数字类型时，设置为0
       if (typeof res !== "number") {
         this.$store.dispatch("saveCartCount", 0);

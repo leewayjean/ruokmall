@@ -69,7 +69,7 @@
           </span>
           <a href="/#/login" class="msg">消息通知</a>
           <a href="/#/cart" class="my-cart">
-            <span class="icon-cart"></span>
+            <span class="iconfont icon-Cart"></span>
             购物车({{cartCount}})
             <div class="cart-detail">
               <p class="empty-tip">购物车中还没有商品，赶紧选购吧~</p>
