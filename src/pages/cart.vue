@@ -1,6 +1,6 @@
 <template>
   <div class="cart">
-    <order-header></order-header>
+    <order-header title="我的购物车" :tipsShow="true"></order-header>
     <div class="main-wrapper">
       <div class="cart-list">
         <!-- 购物车列表头 -->
@@ -44,10 +44,14 @@
                   class="btn minus"
                   @click="decreaseProduct(listItem.productId,listItem.quantity)"
                 >-</span>
-                <input class="num" v-model="listItem.quantity" @blur="changeQuantity(listItem.productId,listItem.quantity)">
+                <input
+                  class="num"
+                  v-model="listItem.quantity"
+                  @blur="changeQuantity(listItem.productId,listItem.quantity,listItem.productStock)"
+                />
                 <span
                   class="btn plus"
-                  @click="increaseProduct(listItem.productId,listItem.quantity)"
+                  @click="increaseProduct(listItem.productId,listItem.quantity,listItem.productStock)"
                 >+</span>
               </div>
             </div>
@@ -73,7 +77,7 @@
               <span class="price">{{cartTotalPrice}}</span>元
             </div>
           </div>
-          <span class="btn-pay" :class="{active:cartTotalPrice > 0}">去结算</span>
+          <router-link class="btn-pay" :class="{active:cartTotalPrice > 0}" to="/order/orderComfirm">去结算</router-link>
         </div>
       </div>
     </div>
@@ -101,10 +105,28 @@ export default {
   },
   methods: {
     // 修改单个商品数量
-    changeQuantity(productId,quantity){
+    changeQuantity(productId, quantity, productStock) {
+      // 判断用户输入的是否为数字
+      const NUM_REG = /^[0-9]+$/; //匹配正整数正则
+      let isNumber = NUM_REG.test(quantity);
+      if (isNumber) {
+        if (quantity > productStock) {
+          this.toast.show("商品加入购物车数量超过限购数");
+          return;
+        } else if (quantity <= 0) {
+          this.toast.show("商品加入购物车数量不能少于1件");
+          return;
+        } else if (quantity === productStock) {
+          return;
+        }
+      } else {
+        this.toast.show("输入的数量只能是数字！");
+        return;
+      }
+
       this.$axios
         .put("/carts/" + productId, {
-          quantity:quantity
+          quantity: quantity
         })
         .then(res => {
           this.renderCart(res);
@@ -122,7 +144,11 @@ export default {
         });
     },
     // 商品加一
-    increaseProduct(productId, quantity) {
+    increaseProduct(productId, quantity, productStock) {
+      if (quantity === productStock) {
+        this.toast.show("商品加入购物车数量超过限购数");
+        return;
+      }
       this.$axios
         .put("/carts/" + productId, {
           quantity: ++quantity

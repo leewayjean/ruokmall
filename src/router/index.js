@@ -5,7 +5,7 @@ import Home from '../pages/home'
 import Index from '../pages/index'
 import Product from '../pages/product'
 import Detail from '../pages/detail'
-import buySuccess from '../pages/buySuccess'
+import addCartSuccess from '../pages/addCartSuccess'
 
 //订单列表 、订单确认、订单支付
 import Order from '../pages/order'
@@ -25,10 +25,10 @@ Vue.use(VueRouter);
 
 const router = new VueRouter({
     routes: [
-        {
+        /* {
             path:'*',
             redirect:'/'
-        },
+        }, */
         //首页 、产品页 、详情页 、加购物车成功页
         {
             path: '/',
@@ -52,10 +52,10 @@ const router = new VueRouter({
                     component: Detail
                 },
                 {
-                    path:'buySuccess/:id',
-                    name:'buySuccess',
-                    component:buySuccess
-                }
+                    path:'addCartSuccess/:id',
+                    name:'addCartSuccess',
+                    component:addCartSuccess
+                },
             ]
         },
         //订单列表 、订单确认、订单支付
@@ -63,20 +63,21 @@ const router = new VueRouter({
             path: '/order',
             name: 'order',
             component: Order,
+            redirect:'orderComfirm',
             children: [
-                {
-                    path: 'orderList',
-                    name: 'orderList',
-                    component: OrderList
-                },
                 {
                     path: 'orderComfirm',
                     name: 'orderComfirm',
                     component: OrderComfirm
                 },
                 {
+                    path: 'orderList',
+                    name: 'orderList',
+                    component: OrderList
+                },
+                {
                     path: 'orderPay',
-                    name: 'OOrderPay',
+                    name: 'orderPay',
                     component: OrderPay
                 }
 

@@ -4,7 +4,7 @@
       <!-- 头部 -->
       <div class="dialog-header">
         <span class="title">{{title}}</span>
-        <span class="icon-close" @click="modalShow = false">X</span>
+        <span class=" iconfont icon-close" @click="modalShow = false"></span>
       </div>
       <!-- body -->
       <div class="dialog-body">
@@ -102,7 +102,7 @@ export default {
         padding: 20px;
     }
     .dialog-footer {
-      height: 82px;
+      height: 80px;
       background: #f5f5f5;
       display: flex;
       justify-content: center;

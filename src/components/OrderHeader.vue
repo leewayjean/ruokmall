@@ -3,8 +3,8 @@
     <div class="container">
       <div class="title-wrapper">
         <Logo />
-        <h2>我的购物车</h2>
-        <p class="tips">温馨提示：产品是否购买成功，以最终下单为准，请尽快结算</p>
+        <h2>{{title}}</h2>
+        <p class="tips" v-if="tipsShow">温馨提示：产品是否购买成功，以最终下单为准，请尽快结算</p>
       </div>
       <div class="user-wrapper">
         <a class="username" href="javascript:;">
@@ -21,6 +21,16 @@
 import Logo from "./Logo";
 export default {
   name: "order-header",
+  props:{
+    title:{
+      type:String,
+      default:'标题'
+    },
+    tipsShow:{
+      type:Boolean,
+      default:false
+    }
+  },
   components: {
     Logo
   }

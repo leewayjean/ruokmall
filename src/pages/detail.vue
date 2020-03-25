@@ -166,7 +166,7 @@ export default {
         .then(res => {
           // 添加购物车成功
           this.$store.dispatch('saveCartCount',res.cartTotalQuantity)
-          this.$router.push(`/buySuccess/${this.id}`);
+          this.$router.push(`/addCartSuccess/${this.id}`);
         });
     }
   },

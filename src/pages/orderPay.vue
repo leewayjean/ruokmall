@@ -1,8 +1,14 @@
 <template>
-    <h3>order-pay</h3>
+    <div class="order-pay">
+        <order-header title="订单支付"></order-header>
+    </div>
 </template>
 <script>
+import OrderHeader from '../components/OrderHeader'
 export default {
-    name:'order-pay'
+    name:'order-pay',
+    components:{
+        OrderHeader
+    }
 }
 </script>

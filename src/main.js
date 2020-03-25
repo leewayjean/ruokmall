@@ -7,6 +7,11 @@ import store from './store'
 import NProgress from 'nprogress'
 import './assets/nprogress/nprogress.css'
 
+import Toast from './components/toast'
+
+
+Vue.use(Toast)
+
 
 
 NProgress.configure({

@@ -12,7 +12,7 @@
                 <ul v-for="(item,i) in categoryItem.list" :key="i">
                   <li v-for="(it,j) in item" :key="j" class="product-item">
                     <a href="javascript:;">
-                      <img :src="it.imgSrc" alt />
+                      <img v-lazy="it.imgSrc" alt />
                       <span>{{it.title}}</span>
                     </a>
                   </li>
