@@ -10,19 +10,25 @@
             <h3>收货地址</h3>
             <div class="address">
               <div
+                v-for="(item,index) in addressList"
+                :key="index"
                 class="addr-box user-address"
-                :class="{selected:isSelected}"
-                @click.once="isSelected = true"
+                :class="{selected:isSelected === index + 1}"
+                @click="chooseAddress(item,index)"
               >
-                <h4 class="consignee">{{usualAddress.receiverName}}</h4>
-                <p class="phone">{{usualAddress.receiverMobile}}</p>
+                <h4 class="consignee">{{item.receiverName}}</h4>
+                <p class="phone">{{item.receiverMobile}}</p>
                 <p
                   class="address"
-                >{{usualAddress.receiverProvince}} {{usualAddress.receiverCity}} {{usualAddress.receiverDistrict}}</p>
-                <p class="address">{{usualAddress.receiverAddress}}</p>
-                <span class="btn-modify" v-if="isSelected">修改</span>
+                >{{item.receiverProvince}} {{item.receiverCity}} {{item.receiverDistrict}}</p>
+                <p class="address">{{item.receiverAddress}}</p>
+                <span
+                  class="btn-modify"
+                  v-if="isSelected === index + 1"
+                  @click="modalShow = true"
+                >修改</span>
               </div>
-              <div class="addr-box add-address">
+              <div class="addr-box add-address" @click="modalShow = true">
                 <span class="icon-plus">+</span>
                 <span class="text">添加新地址</span>
               </div>
@@ -52,47 +58,109 @@
           <!-- 订单预览 -->
           <section class="order-views-wrapper">
             <div class="left"></div>
-            <ul class="order-views">
-              <li>
-                <span>商品件数:</span>
-                <span>7件</span>
-              </li>
-              <li>
-                <span>商品件数:</span>
-                <span>7件</span>
-              </li>
-              <li>
-                <span>商品件数:</span>
-                <span>7件</span>
-              </li>
-              <li>
-                <span>商品件数:</span>
-                <span>7件</span>
-              </li>
-              <li>
-                <span>商品件数:</span>
-                <span>7件</span>
-              </li>
-            </ul>
+            <div class="right">
+              <ul class="title-list">
+                <li>商品件数:</li>
+                <li>商品总价:</li>
+                <li>活动优惠:</li>
+                <li>优惠券抵扣:</li>
+                <li>运费:</li>
+                <li class="total-price-title">应付总额:</li>
+              </ul>
+              <ul class="nums-list">
+                <li>{{quantityTotal}}件</li>
+                <li>{{productTotal}}元</li>
+                <li>-0元</li>
+                <li>-0元</li>
+                <li>0元</li>
+                <li>
+                  <span class="total-price">{{productTotal}}</span> 元
+                </li>
+              </ul>
+            </div>
           </section>
         </div>
-        <div class="order-footer">
+        <!-- 底栏 -->
+        <div class="order-footer" v-if="isSelected !== 0">
           <div class="reveiver-address">
-            <p v-show="isSelected">{{usualAddress.receiverName}} {{usualAddress.receiverMobile}}</p>
+            <p v-show="isSelected">{{userInfo}}</p>
             <p v-show="isSelected">
-              {{usualAddress.receiverProvince}} {{usualAddress.receiverCity}} {{usualAddress.receiverDistrict}}{{usualAddress.receiverAddress}}
+              {{address}}
               <span>修改</span>
             </p>
           </div>
           <div class="btn-group">
             <span class="btn btn-back" @click="$router.push({name:'cart'})">返回购物车</span>
-            <span class="btn btn-pay" @click="toOrder">去结算</span>
+            <span class="btn btn-pay" @click="toOrder">去支付</span>
           </div>
         </div>
       </div>
     </div>
     <!-- modal -->
-    <Modal :modalShow="false"></Modal>
+    <Modal
+      :modalShow="modalShow"
+      title="添加收货地址"
+      @close="modalShow = false"
+      @cancle="modalShow = false"
+      @confirm="setNewAddress"
+    >
+      <template v-slot:dialog-body>
+        <form class="new-address">
+          <!-- 收货人姓名 -->
+          <div class="input-group">
+            <div class="input-item" :class="{'input-focus':target == 1}">
+              <label for="name">姓名</label>
+              <input
+                type="text"
+                :placeholder="target == 1?'收货人姓名':''"
+                id="name"
+                @focus="target = 1"
+                @blur="target = 0"
+                v-model="newAddress.receiverName"
+              />
+            </div>
+            <!-- 收货人手机号 -->
+            <div class="input-item" :class="{'input-focus':target == 2}">
+              <label for="phone">手机号</label>
+              <input
+                type="text"
+                :placeholder="target == 2?'手机号':''"
+                id="phone"
+                @focus="target = 2"
+                @blur="target = 0"
+                v-model="newAddress.receiverMobile"
+              />
+            </div>
+          </div>
+          <!--详细地址 -->
+          <div class="input-group textarea-wrapper">
+            <div class="input-item" :class="{'input-focus':target == 3}">
+              <label for="name">详细地址</label>
+              <textarea
+                :placeholder="target == 3?'详细地址，路名或街道名称，门牌号':''"
+                id="name"
+                @focus="target = 3"
+                @blur="target = 0"
+                v-model="newAddress.receiverAddress"
+              ></textarea>
+            </div>
+          </div>
+          <!-- 地址标签 -->
+          <div class="input-group tag-wrapper">
+            <div class="input-item" :class="{'input-focus':target == 4}">
+              <label for="name">地址标签</label>
+              <input
+                type="text"
+                :placeholder="target == 4?`如&quot;家&quot;、&quot;公司&quot;。限5个字内`:''"
+                id="name"
+                @focus="target = 4"
+                @blur="target = 0"
+              />
+            </div>
+          </div>
+        </form>
+      </template>
+    </Modal>
   </div>
 </template>
 <script>
@@ -103,29 +171,70 @@ export default {
   name: "confirm-order",
   data() {
     return {
-      selectedProductList: [],
-      usualAddress: {},
-      isSelected: false
+      modalShow: false, //是否显示modal组件
+      target: 0, // modal组件动态绑定样式
+      selectedProductList: [], //选中的商品
+      addressList: [], //收货地址
+      isSelected: 0, //选中的收获地址
+      selectedAddress: {},
+      newAddress: {
+        receiverName: "",
+        receiverMobile: "",
+        receiverProvince: "广东省",
+        receiverCity: "清远市",
+        receiverDistrict: "英德市",
+        receiverAddress: ""
+      } //新增收获地址
     };
+  },
+  computed: {
+    address() {
+      let {
+        receiverProvince,
+        receiverCity,
+        receiverDistrict,
+        receiverAddress
+      } = this.selectedAddress;
+      return `${receiverProvince} ${receiverCity} ${receiverDistrict} ${receiverAddress}`;
+    },
+    userInfo() {
+      let { receiverName, receiverMobile } = this.selectedAddress;
+      return `${receiverName} ${receiverMobile}`;
+    },
+    productTotal() {
+      return this.selectedProductList.reduce((prev, next) => {
+        return prev + next.productTotalPrice;
+      }, 0);
+    },
+    quantityTotal() {
+      return this.selectedProductList.reduce((prev, next) => {
+        return prev + next.quantity;
+      }, 0);
+    }
   },
   methods: {
     toOrder() {
       this.$router.push({
-        name: 'orderPay'
+        name: "orderPay"
       });
     },
     getAddress() {
-      this.$axios
-        .get("/shippings", {
-          params: {
-            pageNum: 1,
-            pageSize: 1
-          }
-        })
-        .then(res => {
-          console.log(res);
-          this.usualAddress = res.list[0];
-        });
+      this.$axios.get("/shippings").then(res => {
+        this.addressList = res.list.slice(0, 3);
+      });
+    },
+    setNewAddress() {
+      this.$axios.post("/shippings", this.newAddress).then(res => {
+        console.log(res);
+        this.getAddress();
+        this.modalShow = false;
+      });
+    },
+    chooseAddress(item, index) {
+      this.isSelected = index + 1;
+      this.selectedAddress = item;
+
+      console.log(item, index);
     }
   },
   components: {
@@ -164,6 +273,7 @@ export default {
           margin-bottom: 24px;
           .address {
             display: flex;
+            flex-wrap: wrap;
             .addr-box {
               box-sizing: border-box;
               width: 268px;
@@ -276,9 +386,28 @@ export default {
           }
         }
         .order-views-wrapper {
+          padding-top: 30px;
           display: flex;
           justify-content: space-between;
-          .order-views {
+          .right {
+            display: flex;
+            text-align: right;
+            font-size: 14px;
+            color: #757575;
+            line-height: 2;
+            .title-list {
+              width: 126px;
+              margin-right: 25px;
+              & .total-price-title {
+                padding-top: 20px;
+              }
+            }
+            .nums-list {
+              color: #ff6700;
+              & .total-price {
+                font-size: 30px;
+              }
+            }
           }
         }
       }
@@ -321,6 +450,85 @@ export default {
               border-color: #f25807;
             }
           }
+        }
+      }
+    }
+  }
+  .new-address {
+    .input-group {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 14px;
+      .input-item {
+        position: relative;
+        width: 283px;
+        height: 40px;
+        border: 1px solid #e0e0e0;
+        box-sizing: border-box;
+        font-size: 14px;
+        color: #b0b0b0;
+        transition: border-color 0.4s;
+        &:hover {
+          border-color: #b0b0b0;
+        }
+        label {
+          position: absolute;
+          font-size: 14px;
+          left: 14px;
+          top: 10px;
+          z-index: 333;
+          background-color: #fff;
+          padding: 2px 2px;
+          transition: all 0.4s;
+        }
+        input {
+          position: absolute;
+          left: 0;
+          top: 50%;
+          outline: none;
+          border: none;
+          padding-left: 16px;
+          transform: translateY(-50%);
+          transition: all 0.5s;
+          &::placeholder {
+            color: #b0b0b0;
+          }
+        }
+        &.input-focus {
+          border-color: #ff6700;
+          label {
+            font-size: 12px;
+            top: -8px;
+            color: #ff6700;
+          }
+        }
+      }
+    }
+    .textarea-wrapper {
+      width: 100%;
+      .input-item {
+        width: 100%;
+        height: 64px;
+        label {
+          top: 10px;
+        }
+        textarea {
+          width: 100%;
+          height: 100%;
+          border: none;
+          box-sizing: border-box;
+          padding: 8px 16px;
+          outline: none;
+        }
+      }
+    }
+    .tag-wrapper {
+      width: 100%;
+      .input-item {
+        width: 100%;
+        input {
+          box-sizing: border-box;
+          width: 100%;
         }
       }
     }

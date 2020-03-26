@@ -1,26 +1,34 @@
 <template>
-  <div class="modal" v-show="modalShow">
-    <div class="dialog">
-      <!-- 头部 -->
-      <div class="dialog-header">
-        <span class="title">{{title}}</span>
-        <span class=" iconfont icon-close" @click="modalShow = false"></span>
-      </div>
-      <!-- body -->
-      <div class="dialog-body">
-        <slot name="dialog-body"></slot>
-      </div>
-      <!-- footer -->
-      <div class="dialog-footer">
-        <span class="btn btn-confirm" v-if="btnType === 1" @click="$emit('confirm')">{{confirmTitle}}</span>
-        <span class="btn btn-cancle" v-if="btnType === 2" @click="modalShow = false">{{cancleTitle}}</span>
-        <div class="btn-group" v-if="btnType === 0">
-          <span class="btn btn-confirm" @click="$emit('confirm')">{{confirmTitle}}</span>
-          <span class="btn btn-cancle" @click="modalShow = false">{{cancleTitle}}</span>
+    <div class="modal" v-if="modalShow">
+      <div class="dialog">
+        <!-- 头部 -->
+        <div class="dialog-header">
+          <span class="title">{{title}}</span>
+          <span class="iconfont icon-close" @click="$emit('close')"></span>
+        </div>
+        <!-- body -->
+        <div class="dialog-body">
+          <slot name="dialog-body"></slot>
+        </div>
+        <!-- footer -->
+        <div class="dialog-footer">
+          <span
+            class="btn btn-confirm"
+            v-if="btnType === 1"
+            @click="$emit('confirm')"
+          >{{confirmTitle}}</span>
+          <span
+            class="btn btn-cancle"
+            v-if="btnType === 2"
+            @click="modalShow = false"
+          >{{cancleTitle}}</span>
+          <div class="btn-group" v-if="btnType === 0">
+            <span class="btn btn-confirm" @click="$emit('confirm')">{{confirmTitle}}</span>
+            <span class="btn btn-cancle" @click="$emit('cancle')">{{cancleTitle}}</span>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 </template>
 <script>
 export default {
@@ -55,8 +63,24 @@ export default {
       default: false
     }
   },
+  computed: {
+    isModalShow: {
+      get() {
+        return this.modalShow;
+      },
+      set(newValue) {
+        console.log(newValue);
+        this.modalShow = newValue;
+      }
+    }
+  },
   data() {
     return {};
+  },
+  methods: {
+    doSomething() {
+      console.log("fjjdfj");
+    }
   }
 };
 </script>
@@ -69,13 +93,15 @@ export default {
   width: 100%;
   height: 100%;
   background-color: rgba($color: #000000, $alpha: 0.4);
+  opacity: 1;
   .dialog {
     position: fixed;
+    width: 660px;
     left: 50%;
     top: 0;
-    transform: translate(-50%, 105px);
-    width: 660px;
+    transform: translate(-50%, 100px);
     background-color: #fff;
+    opacity: 1;
     .dialog-header {
       height: 60px;
       background: #f5f5f5;
@@ -83,9 +109,14 @@ export default {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      .title {
+        font-size: 18px;
+        color: #424242;
+      }
       .icon-close {
         width: 26px;
         height: 26px;
+        font-size: 24px;
         background: #f5f5f5;
         line-height: 26px;
         text-align: center;
@@ -99,7 +130,7 @@ export default {
       }
     }
     .dialog-body {
-        padding: 20px;
+      padding: 40px 40px 0 40px;
     }
     .dialog-footer {
       height: 80px;
