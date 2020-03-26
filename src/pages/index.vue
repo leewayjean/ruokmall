@@ -698,7 +698,6 @@ export default {
       let phoneList = [];
       phoneList.push(res.list.slice(0, 4), res.list.slice(4, 8));
       this.phoneList = phoneList;
-      console.log(phoneList)
     });
   },
   components: {

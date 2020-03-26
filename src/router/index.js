@@ -11,6 +11,7 @@ import addCartSuccess from '../pages/addCartSuccess'
 import Order from '../pages/order'
 import OrderList from '../pages/orderList'
 import OrderComfirm from '../pages/orderComfirm'
+import OrderSuccess from '../pages/OrderSuccess'
 import OrderPay from '../pages/orderPay'
 // 购物车
 import Cart from '../pages/cart'
@@ -69,6 +70,11 @@ const router = new VueRouter({
                     path: 'orderComfirm',
                     name: 'orderComfirm',
                     component: OrderComfirm
+                },
+                {
+                    path:'orderSuccess',
+                    name:'orderSuccess',
+                    component:OrderSuccess,
                 },
                 {
                     path: 'orderList',

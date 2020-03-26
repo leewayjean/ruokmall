@@ -64,13 +64,14 @@
   </div>
 </template>
 <script>
+import { getCartCount } from "../api";
 export default {
   name: "login",
   data() {
     return {
       username: "",
       password: "",
-      lock:true
+      lock: true
     };
   },
   methods: {
@@ -90,10 +91,20 @@ export default {
 
             // 登录成功，将用户名存储到vuex中
             this.$store.dispatch("saveUserName", res.username);
+            // 同时更新购物车数据
+            getCartCount().then(res => {
+              //未登录时，接口返回不是数字类型时，设置为0
+              if (typeof res !== "number") {
+                this.$store.dispatch("saveCartCount", 0);
+              } else {
+                this.$store.dispatch("saveCartCount", res);
+              }
+            });
+            // 跳转到首页
             this.$router.push("/index");
           });
       } else {
-        alert("账号密码不能为空");
+        this.toast.show("账号密码不能为空");
       }
 
       // this.$axios.post('/user/register',{
@@ -169,7 +180,7 @@ export default {
             &:nth-of-type(2) {
               margin-right: 42px;
             }
-            &.isActive{
+            &.isActive {
               color: #f60;
             }
             &:hover {

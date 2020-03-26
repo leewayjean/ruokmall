@@ -25,7 +25,7 @@
                 <span
                   class="btn-modify"
                   v-if="isSelected === index + 1"
-                  @click="modalShow = true"
+                  @click="modifyAddress(item)"
                 >修改</span>
               </div>
               <div class="addr-box add-address" @click="modalShow = true">
@@ -108,7 +108,10 @@
         <form class="new-address">
           <!-- 收货人姓名 -->
           <div class="input-group">
-            <div class="input-item" :class="{'input-focus':target == 1}">
+            <div
+              class="input-item"
+              :class="{'input-focus':target == 1,'input-active':newAddress.receiverName != ''}"
+            >
               <label for="name">姓名</label>
               <input
                 type="text"
@@ -120,7 +123,10 @@
               />
             </div>
             <!-- 收货人手机号 -->
-            <div class="input-item" :class="{'input-focus':target == 2}">
+            <div
+              class="input-item"
+              :class="{'input-focus':target == 2,'input-active':newAddress.receiverMobile != ''}"
+            >
               <label for="phone">手机号</label>
               <input
                 type="text"
@@ -134,7 +140,10 @@
           </div>
           <!--详细地址 -->
           <div class="input-group textarea-wrapper">
-            <div class="input-item" :class="{'input-focus':target == 3}">
+            <div
+              class="input-item"
+              :class="{'input-focus':target == 3,'input-active':newAddress.receiverAddress != ''}"
+            >
               <label for="name">详细地址</label>
               <textarea
                 :placeholder="target == 3?'详细地址，路名或街道名称，门牌号':''"
@@ -147,7 +156,10 @@
           </div>
           <!-- 地址标签 -->
           <div class="input-group tag-wrapper">
-            <div class="input-item" :class="{'input-focus':target == 4}">
+            <div
+              class="input-item"
+              :class="{'input-focus':target == 4,'input-active':newAddress.receiverAddress != ''}"
+            >
               <label for="name">地址标签</label>
               <input
                 type="text"
@@ -155,6 +167,7 @@
                 id="name"
                 @focus="target = 4"
                 @blur="target = 0"
+                v-model="newAddress.receiverAddress"
               />
             </div>
           </div>
@@ -176,6 +189,7 @@ export default {
       selectedProductList: [], //选中的商品
       addressList: [], //收货地址
       isSelected: 0, //选中的收获地址
+      shippingId: null,
       selectedAddress: {},
       newAddress: {
         receiverName: "",
@@ -214,9 +228,17 @@ export default {
   },
   methods: {
     toOrder() {
-      this.$router.push({
-        name: "orderPay"
-      });
+      let { shippingId } = this;
+      this.$axios
+        .post("/orders", {
+          shippingId
+        })
+        .then(res => {
+            console.log(res);
+          this.$router.push({
+            name: "orderPay"
+          });
+        });
     },
     getAddress() {
       this.$axios.get("/shippings").then(res => {
@@ -230,11 +252,14 @@ export default {
         this.modalShow = false;
       });
     },
+    modifyAddress(item) {
+      this.modalShow = true;
+      this.newAddress = item;
+    },
     chooseAddress(item, index) {
       this.isSelected = index + 1;
       this.selectedAddress = item;
-
-      console.log(item, index);
+      this.shippingId = item.id;
     }
   },
   components: {
@@ -500,6 +525,12 @@ export default {
             font-size: 12px;
             top: -8px;
             color: #ff6700;
+          }
+        }
+        &.input-active {
+          label {
+            font-size: 12px;
+            top: -8px;
           }
         }
       }

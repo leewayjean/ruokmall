@@ -62,7 +62,8 @@
           <p class="total-price">总计：{{product.price}}元</p>
         </div>
         <div class="addCart-box">
-          <span class="btn-add" @click="addToCart">加入购物车</span>
+          <span class="btn-add" @click="addToCart" v-if="username !== ''">加入购物车</span>
+          <span class="btn-add" @click="$router.push({name:'login'})" v-else>登陆后购买</span>
           <span class="btn-like">收藏</span>
         </div>
       </div>
@@ -150,6 +151,11 @@ export default {
       ],
       product: {}
     };
+  },
+  computed:{
+    username(){
+      return this.$store.state.username;
+    }
   },
   methods: {
     getProduct() {

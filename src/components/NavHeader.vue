@@ -179,10 +179,10 @@ export default {
   },
   methods: {
     logout() {
-      this.$axios.post("/user/logout").then(res => {
-        console.log("退出成功" + res);
+      this.$axios.post("/user/logout").then(() => {
         this.$store.dispatch("saveUserName", "");
-        alert("退出成功");
+        this.$store.dispatch('saveCartCount',0)
+        this.toast.show("退出成功");
       });
     }
   }

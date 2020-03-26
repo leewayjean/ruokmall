@@ -77,7 +77,11 @@
               <span class="price">{{cartTotalPrice}}</span>元
             </div>
           </div>
-          <router-link class="btn-pay" :class="{active:cartTotalPrice > 0}" to="/order/orderComfirm">去结算</router-link>
+          <router-link
+            class="btn-pay"
+            :class="{active:cartTotalPrice > 0}"
+            to="/order/orderComfirm"
+          >去结算</router-link>
         </div>
       </div>
     </div>
@@ -87,7 +91,7 @@
 <script>
 import OrderHeader from "../components/OrderHeader";
 import NavFooter from "../components/NavFooter";
-import { getCartList } from "../api";
+import { getCartList, getCartCount } from "../api";
 export default {
   name: "cart",
   components: {
@@ -104,6 +108,16 @@ export default {
     };
   },
   methods: {
+    storeCartCount() {
+      getCartCount().then(res => {
+        //未登录时，接口返回不是数字类型时，设置为0
+        if (typeof res !== "number") {
+          this.$store.dispatch("saveCartCount", 0);
+        } else {
+          this.$store.dispatch("saveCartCount", res);
+        }
+      });
+    },
     // 修改单个商品数量
     changeQuantity(productId, quantity, productStock) {
       // 判断用户输入的是否为数字
@@ -186,6 +200,8 @@ export default {
       this.cartTotalQuantity = res.cartTotalQuantity;
       this.selectedAll = res.selectedAll;
       this.cartTotalPrice = res.cartTotalPrice;
+      // 更新购物车数量
+      this.storeCartCount();
     }
   },
   mounted() {
