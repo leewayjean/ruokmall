@@ -234,9 +234,13 @@ export default {
           shippingId
         })
         .then(res => {
-            console.log(res);
+          console.log(res);
+          let { orderNo } = res;
           this.$router.push({
-            name: "orderPay"
+            name: "orderSuccess",
+            query: {
+              orderNo
+            }
           });
         });
     },

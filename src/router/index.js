@@ -11,7 +11,7 @@ import addCartSuccess from '../pages/addCartSuccess'
 import Order from '../pages/order'
 import OrderList from '../pages/orderList'
 import OrderComfirm from '../pages/orderComfirm'
-import OrderSuccess from '../pages/OrderSuccess'
+import OrderSuccess from '../pages/orderSuccess'
 import OrderPay from '../pages/orderPay'
 // 购物车
 import Cart from '../pages/cart'

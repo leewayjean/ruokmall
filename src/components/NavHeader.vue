@@ -350,6 +350,7 @@ export default {
   }
   // nav-header
   .nav-header {
+    background: #fff;
     .container {
       position: relative;
       width: 1226px;

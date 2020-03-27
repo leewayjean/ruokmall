@@ -2,7 +2,11 @@
   <div class="cart">
     <order-header title="我的购物车" :tipsShow="true"></order-header>
     <div class="main-wrapper">
-      <div class="cart-list">
+      <div class="cart-empty" v-if="cartTotalQuantity === 0">
+        <h2>你的购物车还是空的!</h2>
+        <div class="btn-tobuy" @click="$router.push({name:'index'})">马上去购物</div>
+      </div>
+      <div class="cart-list" v-else>
         <!-- 购物车列表头 -->
         <div class="cart-list-header">
           <div class="col col-check">
@@ -100,6 +104,7 @@ export default {
   },
   data() {
     return {
+      isEmpty:false,
       cartList: [], //购物车商品
       cartTotalQuantity: 0, //购物车总数
       selectedAll: false, //是否全选
@@ -423,6 +428,30 @@ export default {
             }
           }
         }
+      }
+    }
+    .cart-empty {
+      width: 1226px;
+      height: 273px;
+      margin: 65px auto 130px;
+      box-sizing: border-box;
+      background: url("/imgs/cart-empty.png") no-repeat;
+      padding-left: 550px;
+      background-position-x: 130px;
+      h2 {
+        font-size: 36px;
+        color: #b0b0b0;
+        line-height: 145px;
+        font-weight: bold;
+      }
+      .btn-tobuy {
+        width: 172px;
+        height: 50px;
+        background-color: #ff6700;
+        color: #fff;
+        line-height: 50px;
+        text-align: center;
+        cursor: pointer;
       }
     }
   }
