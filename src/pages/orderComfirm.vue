@@ -109,7 +109,7 @@
       title="添加收货地址"
       @close="modalShow = false"
       @cancle="modalShow = false"
-      @confirm="setNewAddress"
+      @confirm="addNewAddress"
     >
       <template v-slot:dialog-body>
         <form class="new-address">
@@ -200,15 +200,15 @@ export default {
   name: "confirm-order",
   data() {
     return {
-      showLoading: true,
-      delModalShow:false,
-      modalShow: false, //是否显示modal组件
+      showLoading: true, //是否显示加载动画
+      delModalShow: false, //是否显示删除地址弹出框
+      modalShow: false, //是否显示添加地址弹出框
       target: 0, // modal组件动态绑定样式
       selectedProductList: [], //选中的商品
-      addressList: [], //收货地址
-      isSelected: 0, //选中的收获地址
-      shippingId: null,
-      selectedAddress: {},
+      addressList: [], //收货地址列表
+      isSelected: 0, //选中的收获地址索引
+      shippingId: null, //地址的id
+      selectedAddress: {}, //用户选择的地址
       newAddress: {
         receiverName: "",
         receiverMobile: "",
@@ -216,7 +216,7 @@ export default {
         receiverCity: "清远市",
         receiverDistrict: "英德市",
         receiverAddress: ""
-      } //新增收获地址
+      } //新增地址
     };
   },
   computed: {
@@ -229,15 +229,18 @@ export default {
       } = this.selectedAddress;
       return `${receiverProvince} ${receiverCity} ${receiverDistrict} ${receiverAddress}`;
     },
+    // 收货人信息
     userInfo() {
       let { receiverName, receiverMobile } = this.selectedAddress;
       return `${receiverName} ${receiverMobile}`;
     },
+    // 总金额
     productTotal() {
       return this.selectedProductList.reduce((prev, next) => {
         return prev + next.productTotalPrice;
       }, 0);
     },
+    // 总数量
     quantityTotal() {
       return this.selectedProductList.reduce((prev, next) => {
         return prev + next.quantity;
@@ -245,6 +248,7 @@ export default {
     }
   },
   methods: {
+    // 下单
     toOrder() {
       let { shippingId } = this;
       this.$axios
@@ -262,12 +266,7 @@ export default {
           });
         });
     },
-    getAddress(resolve) {
-      this.$axios.get("/shippings").then(res => {
-        this.addressList = res.list.slice(0, 3);
-        resolve();
-      });
-    },
+    // 获取购物车列表
     getCart(resolve) {
       getCartList().then(res => {
         this.selectedProductList = res.cartProductVoList.filter(item => {
@@ -276,22 +275,33 @@ export default {
         resolve();
       });
     },
-    setNewAddress() {
+    // 获取收货地址
+    getAddress(resolve) {
+      this.$axios.get("/shippings").then(res => {
+        this.addressList = res.list.slice(0, 3);
+        resolve();
+      });
+    },
+    // 增加收货地址
+    addNewAddress() {
       this.$axios.post("/shippings", this.newAddress).then(() => {
         this.getAddress();
         this.modalShow = false;
       });
     },
+    // 删除收货地址
     delAddress() {
-      this.$axios.delete(`/shippings/${this.shippingId}`).then(() =>{
+      this.$axios.delete(`/shippings/${this.shippingId}`).then(() => {
         this.getAddress();
         this.delModalShow = false;
-      })
+      });
     },
+    // 修改收货地址
     modifyAddress(item) {
       this.modalShow = true;
       this.newAddress = item;
     },
+    // 选择收货地址
     chooseAddress(item, index) {
       this.isSelected = index + 1;
       this.selectedAddress = item;
@@ -309,9 +319,6 @@ export default {
     }).then(() => {
       this.showLoading = false;
     });
-    // // this.getAddress();
-    // this.getAddress();
-    // this.getCart()
   }
 };
 </script>
@@ -370,8 +377,8 @@ export default {
                       .icon-delete {
                         display: inline-block;
                         margin-right: 185px;
-                        transition: transform .3;
-                        &:hover{
+                        transition: transform 0.3;
+                        &:hover {
                           transform: scale(1.2);
                         }
                       }
@@ -634,14 +641,14 @@ export default {
           border-color: #ff6700;
           label {
             font-size: 12px;
-            top: -8px;
+            top: -10px;
             color: #ff6700;
           }
         }
         &.input-active {
           label {
             font-size: 12px;
-            top: -8px;
+            top: -10px;
           }
         }
       }

@@ -58,7 +58,7 @@
             </div>
             <div class="col col-total">{{listItem.productTotalPrice}}元</div>
             <div class="col col-action">
-              <span class="btn-delete" @click="removeProduct(listItem.productId)">
+              <span class="btn-delete" @click="deleteProduct(listItem.productId)">
                 <i class="iconfont icon-close"></i>
               </span>
             </div>
@@ -98,6 +98,15 @@
         <div class="rect4"></div>
         <div class="rect5"></div>
       </div>
+      <!-- 删除购物车商品modal -->
+      <Modal
+        :modalShow="delModalShow"
+        title="移除商品"
+        @close="delModalShow = false"
+        @cancle="delModalShow = false"
+        @confirm="removeProduct"
+        msg="确定要移除这件商品吗？"
+      ></Modal>
     </div>
     <nav-footer></nav-footer>
   </div>
@@ -105,22 +114,26 @@
 <script>
 import OrderHeader from "../components/OrderHeader";
 import NavFooter from "../components/NavFooter";
+import Modal from "../components/Modal";
 import { getCartList, getCartCount } from "../api";
 export default {
   name: "cart",
   components: {
     OrderHeader,
-    NavFooter
+    NavFooter,
+    Modal
   },
   data() {
     return {
+      delModalShow: false,
       showLoading: true,
       isEmpty: false,
       cartList: [], //购物车商品
       cartTotalQuantity: 0, //购物车总数
       selectedAll: false, //是否全选
       cartTotalPrice: 0, // 购物车总金额
-      selectedQuantity: 0 // 已选择件数
+      selectedQuantity: 0, // 已选择件数
+      productId: 0
     };
   },
   methods: {
@@ -197,10 +210,15 @@ export default {
           this.renderCart(res);
         });
     },
+    deleteProduct(id) {
+      this.delModalShow = true;
+      this.productId = id;
+    },
     // 移除商品
-    removeProduct(id) {
-      this.$axios.delete("/carts/" + id).then(res => {
+    removeProduct() {
+      this.$axios.delete("/carts/" + this.productId).then(res => {
         this.renderCart(res);
+        this.delModalShow = false;
       });
     },
     // 全选按钮点击

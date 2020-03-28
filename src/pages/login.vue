@@ -24,7 +24,7 @@
           <div class="acount-login-body" v-if="lock">
             <form>
               <p>
-                <input type="email" placeholder="邮箱/手机号码/小米ID" v-model="username" />
+                <input type="text" placeholder="邮箱/手机号码/小米ID" v-model="username" />
               </p>
               <p>
                 <input type="password" placeholder="密码" v-model="password" />

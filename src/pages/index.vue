@@ -800,6 +800,7 @@ export default {
           .swiper-container {
             position: relative;
             .swiper-wrapper a{
+              width: 100%;
               display: inline-block;
             }
             // 分页器
