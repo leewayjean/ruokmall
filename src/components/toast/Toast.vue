@@ -1,6 +1,6 @@
 <template>
   <transition name="slide">
-    <div class="toast" v-if="isShow">
+    <div class="toast" v-show="isShow">
       <div class="mask"></div>
       <div class="dialog">
         <div class="dialog-header">
@@ -50,11 +50,11 @@ export default {
   left: 0;
   top: 0;
   z-index: 999;
-  transition: all 1s;
   .mask {
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.3);
+    background: #000;
+    opacity: .5;
   }
   .dialog {
     width: 500px;
@@ -107,8 +107,9 @@ export default {
 // 过渡动画
 .slide-enter-active,
 .slide-leave-active {
+    transition: all .4s;
   .mask{
-    transition: opcity .4s linear;
+    transition: opacity .3s linear;
   }
   .dialog {
     transition: top .4s ease-out;

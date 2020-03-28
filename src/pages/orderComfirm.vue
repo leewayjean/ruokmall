@@ -19,15 +19,12 @@
                 >
                   <h4 class="consignee">{{item.receiverName}}</h4>
                   <p class="phone">{{item.receiverMobile}}</p>
-                  <p
-                    class="address"
-                  >{{item.receiverProvince}} {{item.receiverCity}} {{item.receiverDistrict}}</p>
-                  <p class="address">{{item.receiverAddress}}</p>
-                  <span
-                    class="btn-modify"
-                    v-if="isSelected === index + 1"
-                    @click="modifyAddress(item)"
-                  >修改</span>
+                  <p>{{item.receiverProvince}} {{item.receiverCity}} {{item.receiverDistrict}}</p>
+                  <p>{{item.receiverAddress}}</p>
+                  <p class="footer" v-if="isSelected === index + 1">
+                    <span class="iconfont icon-delete" @click="delModalShow = true"></span>
+                    <span class="btn-modify" @click="modifyAddress(item)">修改</span>
+                  </p>
                 </div>
                 <div class="addr-box add-address" @click="modalShow = true">
                   <span class="icon-plus">+</span>
@@ -106,7 +103,7 @@
         </div>
       </div>
     </div>
-    <!-- modal -->
+    <!-- 增加地址modal -->
     <Modal
       :modalShow="modalShow"
       title="添加收货地址"
@@ -184,6 +181,15 @@
         </form>
       </template>
     </Modal>
+    <!-- 删除地址modal -->
+    <Modal
+      :modalShow="delModalShow"
+      title="删除收货地址"
+      @close="delModalShow = false"
+      @cancle="delModalShow = false"
+      @confirm="delAddress"
+      msg="确定要删除这个地址吗？"
+    ></Modal>
   </div>
 </template>
 <script>
@@ -195,6 +201,7 @@ export default {
   data() {
     return {
       showLoading: true,
+      delModalShow:false,
       modalShow: false, //是否显示modal组件
       target: 0, // modal组件动态绑定样式
       selectedProductList: [], //选中的商品
@@ -270,11 +277,16 @@ export default {
       });
     },
     setNewAddress() {
-      this.$axios.post("/shippings", this.newAddress).then(res => {
-        console.log(res);
+      this.$axios.post("/shippings", this.newAddress).then(() => {
         this.getAddress();
         this.modalShow = false;
       });
+    },
+    delAddress() {
+      this.$axios.delete(`/shippings/${this.shippingId}`).then(() =>{
+        this.getAddress();
+        this.delModalShow = false;
+      })
     },
     modifyAddress(item) {
       this.modalShow = true;
@@ -349,13 +361,21 @@ export default {
                     font-size: 14px;
                     color: #757575;
                     line-height: 22px;
-                  }
-                  .btn-modify {
-                    position: absolute;
-                    right: 24px;
-                    bottom: 16px;
-                    font-size: 14px;
-                    color: #ff6700;
+                    &.footer {
+                      position: absolute;
+                      left: 24px;
+                      bottom: 16px;
+                      color: #ff6700;
+                      font-size: 12px;
+                      .icon-delete {
+                        display: inline-block;
+                        margin-right: 185px;
+                        transition: transform .3;
+                        &:hover{
+                          transform: scale(1.2);
+                        }
+                      }
+                    }
                   }
                 }
                 &.add-address {

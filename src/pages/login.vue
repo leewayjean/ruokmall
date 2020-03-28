@@ -86,25 +86,26 @@ export default {
             password
           })
           .then(res => {
+            let isError = Object.prototype.hasOwnProperty.call(res, "data");
             console.log(res);
-            // res.data.status
-            if(res.data.status !== 0){
+            if (isError) {
+              //如果有data属性，说明登录未成功
               this.toast.show(res.data.msg);
+            } else {
+              // 登录成功，将用户名存储到vuex中
+              this.$store.dispatch("saveUserName", res.username);
+              // 同时更新购物车数据
+              getCartCount().then(res => {
+                //未登录时，接口返回不是数字类型时，设置为0
+                if (typeof res !== "number") {
+                  this.$store.dispatch("saveCartCount", 0);
+                } else {
+                  this.$store.dispatch("saveCartCount", res);
+                }
+              });
+              // 跳转到首页
+              this.$router.push("/index");
             }
-
-            // 登录成功，将用户名存储到vuex中
-            this.$store.dispatch("saveUserName", res.username);
-            // 同时更新购物车数据
-            getCartCount().then(res => {
-              //未登录时，接口返回不是数字类型时，设置为0
-              if (typeof res !== "number") {
-                this.$store.dispatch("saveCartCount", 0);
-              } else {
-                this.$store.dispatch("saveCartCount", res);
-              }
-            });
-            // 跳转到首页
-            this.$router.push("/index");
           });
       } else {
         this.toast.show("账号密码不能为空");
@@ -223,9 +224,15 @@ export default {
               height: 50px;
               font-size: 16px;
               color: #fff;
-              background-color: #f60;
+              background-color: #ff6700;
               line-height: 50px;
               cursor: pointer;
+              transition: all .4s;
+              &:hover {
+                background-color: #f25807;
+                border-color: #f25807;
+                color: #fff;
+              }
             }
           }
           .other-way {

@@ -1,6 +1,6 @@
 <template>
   <transition name="slide">
-    <div class="modal" v-if="modalShow">
+    <div class="modal" v-show="modalShow">
       <div class="mask"></div>
       <div class="dialog">
         <!-- 头部 -->
@@ -10,6 +10,7 @@
         </div>
         <!-- body -->
         <div class="dialog-body">
+          <p class="msg">{{msg}}</p>
           <slot name="dialog-body"></slot>
         </div>
         <!-- footer -->
@@ -48,6 +49,10 @@ export default {
     cancleTitle: {
       type: String,
       default: "取消"
+    },
+    msg:{
+      type:String,
+      default:''
     },
     /* 
     *按钮类型
@@ -140,7 +145,11 @@ export default {
       }
     }
     .dialog-body {
-      padding: 40px 40px 0 40px;
+      padding: 40px;
+      .msg{
+        font-size: 24px;
+        padding-bottom: 48px;
+      }
     }
     .dialog-footer {
       height: 80px;

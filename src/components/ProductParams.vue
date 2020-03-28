@@ -1,7 +1,7 @@
 <template>
   <div class="product-params">
     <div class="navbar">
-      <div class="container">
+      <div class="navbar-container">
         <div class="left">
           <span class="product-name">{{productName}}</span>
         </div>
@@ -17,7 +17,7 @@
     </div>
     <!-- 隐藏的吸顶导航 -->
     <div class="navbar navbar-hidden" :class="{'navbar-fixed':isFixed}">
-      <div class="container">
+      <div class="navbar-container">
         <div class="left">
           <span class="product-name">{{productName}}</span>
         </div>
@@ -72,7 +72,7 @@ export default {
     border-top: 1px solid #e0e0e0;
     -webkit-box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.07);
     box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.07);
-    .container {
+    .navbar-container {
       display: flex;
       justify-content: space-between;
       width: 1226px;
