@@ -1,5 +1,7 @@
 <template>
+  <transition name="slide">
     <div class="modal" v-if="modalShow">
+      <div class="mask"></div>
       <div class="dialog">
         <!-- 头部 -->
         <div class="dialog-header">
@@ -29,6 +31,7 @@
         </div>
       </div>
     </div>
+  </transition>
 </template>
 <script>
 export default {
@@ -92,8 +95,15 @@ export default {
   z-index: 999;
   width: 100%;
   height: 100%;
-  background-color: rgba($color: #000000, $alpha: 0.4);
-  opacity: 1;
+  transition: all 1s;
+  .mask {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba($color: #000000, $alpha: 0.4);
+  }
   .dialog {
     position: fixed;
     width: 660px;
@@ -162,6 +172,26 @@ export default {
         align-items: center;
       }
     }
+  }
+}
+
+// 过渡动画
+.slide-enter-active,
+.slide-leave-active {
+  .mask{
+    transition: opcity .4s linear;
+  }
+  .dialog {
+    transition: top .4s ease-out;
+  }
+}
+.slide-enter,
+.slide-leave-to {
+  .mask {
+    opacity: 0;
+  }
+  .dialog {
+    top: -100%;
   }
 }
 </style>

@@ -88,6 +88,9 @@ export default {
           .then(res => {
             console.log(res);
             // res.data.status
+            if(res.data.status !== 0){
+              this.toast.show(res.data.msg);
+            }
 
             // 登录成功，将用户名存储到vuex中
             this.$store.dispatch("saveUserName", res.username);

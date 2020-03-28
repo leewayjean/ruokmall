@@ -60,7 +60,7 @@
                 </li>
               </ul>
             </a>
-            <a href="javascript:;" class="my-order">我的订单</a>
+            <a href="/#/order/orderList" class="my-order">我的订单</a>
           </span>
           <!-- 未登录显示 -->
           <span class="not-login" v-else>
@@ -68,12 +68,9 @@
             <a  @click="$emit('register-click')">注册</a>
           </span>
           <a href="/#/login" class="msg">消息通知</a>
-          <a href="/#/cart" class="my-cart">
+          <a href="/#/cart" class="my-cart" :class="{'has-goods':cartCount > 0}">
             <span class="iconfont icon-Cart"></span>
             购物车({{cartCount}})
-            <div class="cart-detail">
-              <p class="empty-tip">购物车中还没有商品，赶紧选购吧~</p>
-            </div>
           </a>
         </div>
       </div>
@@ -318,31 +315,13 @@ export default {
           height: 39px;
           line-height: 39px;
           background: #424242;
-          .cart-detail {
-            position: absolute;
-            top: 39px;
-            right: 0;
-            z-index: 99;
-            width: 260px;
-            height: 0px;
-            opacity: 0;
-            background: #fff;
-            box-shadow: 1px 7px 7px 0px #0000001a;
-            transition: all 0.4s;
-            text-align: center;
-            line-height: 100px;
-            .empty-tip {
-              font-size: 12px;
-              color: #333;
-            }
+          &.has-goods{
+            background-color: #f60;
+            color: #fff;
           }
           &:hover {
             background-color: #fff;
             color: $colorA;
-            .cart-detail {
-              height: 100px;
-              opacity: 1;
-            }
           }
         }
       }

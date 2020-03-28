@@ -18,7 +18,7 @@
 </template>
 <script>
 import ProductParams from "../components/ProductParams";
-import {getProductDetail} from '../api'
+import { getProductDetail } from "../api";
 export default {
   name: "product",
   data() {
@@ -59,11 +59,11 @@ export default {
       .name {
         font-size: 80px;
         color: #333;
-        margin:30px 0;
+        margin: 30px 0;
       }
       .subtitle {
         font-size: 24px;
-        margin:20px 0
+        margin: 20px 0;
       }
       .price {
         font-size: 38px;

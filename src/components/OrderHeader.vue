@@ -12,7 +12,7 @@
           <i class="iconfont icon-arrow"></i>
         </a>
         <span class="split">|</span>
-        <a href="javascript:;">我的订单</a>
+        <a href="/#/order/orderList">我的订单</a>
       </div>
     </div>
   </header>

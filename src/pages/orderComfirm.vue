@@ -4,95 +4,105 @@
     <!-- 订单信息区 -->
     <div class="order-info-area">
       <div class="container">
-        <div class="order-content">
-          <!-- 收获地址 -->
-          <section class="address-wrapper">
-            <h3>收货地址</h3>
-            <div class="address">
-              <div
-                v-for="(item,index) in addressList"
-                :key="index"
-                class="addr-box user-address"
-                :class="{selected:isSelected === index + 1}"
-                @click="chooseAddress(item,index)"
-              >
-                <h4 class="consignee">{{item.receiverName}}</h4>
-                <p class="phone">{{item.receiverMobile}}</p>
-                <p
-                  class="address"
-                >{{item.receiverProvince}} {{item.receiverCity}} {{item.receiverDistrict}}</p>
-                <p class="address">{{item.receiverAddress}}</p>
-                <span
-                  class="btn-modify"
-                  v-if="isSelected === index + 1"
-                  @click="modifyAddress(item)"
-                >修改</span>
-              </div>
-              <div class="addr-box add-address" @click="modalShow = true">
-                <span class="icon-plus">+</span>
-                <span class="text">添加新地址</span>
-              </div>
-            </div>
-          </section>
-          <!-- 商品及优惠 -->
-          <section class="product-wrapper">
-            <h3>商品及优惠券</h3>
-            <ul class="product-list">
-              <li class="product-item" v-for="(item,index) in selectedProductList" :key="index">
-                <div class="col col-img">
-                  <img v-lazy="item.productMainImage" alt />
+        <div class="order-section" v-if="addressList.length >0 ||selectedProductList.length >0">
+          <div class="order-content">
+            <!-- 收获地址 -->
+            <section class="address-wrapper">
+              <h3>收货地址</h3>
+              <div class="address">
+                <div
+                  v-for="(item,index) in addressList"
+                  :key="index"
+                  class="addr-box user-address"
+                  :class="{selected:isSelected === index + 1}"
+                  @click="chooseAddress(item,index)"
+                >
+                  <h4 class="consignee">{{item.receiverName}}</h4>
+                  <p class="phone">{{item.receiverMobile}}</p>
+                  <p
+                    class="address"
+                  >{{item.receiverProvince}} {{item.receiverCity}} {{item.receiverDistrict}}</p>
+                  <p class="address">{{item.receiverAddress}}</p>
+                  <span
+                    class="btn-modify"
+                    v-if="isSelected === index + 1"
+                    @click="modifyAddress(item)"
+                  >修改</span>
                 </div>
-                <div class="col col-name">
-                  <a href>{{item.productName}}</a>
+                <div class="addr-box add-address" @click="modalShow = true">
+                  <span class="icon-plus">+</span>
+                  <span class="text">添加新地址</span>
                 </div>
-                <div class="col col-price">{{item.productPrice}} x {{item.quantity}}</div>
-                <div class="col col-total">{{item.productTotalPrice}}元</div>
-              </li>
-            </ul>
-          </section>
-          <!-- 配送方式 -->
-          <section class="dilivery-ways">
-            <h3>配送方式</h3>
-            <span class="ways">包邮</span>
-          </section>
-          <!-- 订单预览 -->
-          <section class="order-views-wrapper">
-            <div class="left"></div>
-            <div class="right">
-              <ul class="title-list">
-                <li>商品件数:</li>
-                <li>商品总价:</li>
-                <li>活动优惠:</li>
-                <li>优惠券抵扣:</li>
-                <li>运费:</li>
-                <li class="total-price-title">应付总额:</li>
-              </ul>
-              <ul class="nums-list">
-                <li>{{quantityTotal}}件</li>
-                <li>{{productTotal}}元</li>
-                <li>-0元</li>
-                <li>-0元</li>
-                <li>0元</li>
-                <li>
-                  <span class="total-price">{{productTotal}}</span> 元
+              </div>
+            </section>
+            <!-- 商品及优惠 -->
+            <section class="product-wrapper">
+              <h3>商品及优惠券</h3>
+              <ul class="product-list">
+                <li class="product-item" v-for="(item,index) in selectedProductList" :key="index">
+                  <div class="col col-img">
+                    <img v-lazy="item.productMainImage" alt />
+                  </div>
+                  <div class="col col-name">
+                    <a href>{{item.productName}}</a>
+                  </div>
+                  <div class="col col-price">{{item.productPrice}} x {{item.quantity}}</div>
+                  <div class="col col-total">{{item.productTotalPrice}}元</div>
                 </li>
               </ul>
+            </section>
+            <!-- 配送方式 -->
+            <section class="dilivery-ways">
+              <h3>配送方式</h3>
+              <span class="ways">包邮</span>
+            </section>
+            <!-- 订单预览 -->
+            <section class="order-views-wrapper">
+              <div class="left"></div>
+              <div class="right">
+                <ul class="title-list">
+                  <li>商品件数:</li>
+                  <li>商品总价:</li>
+                  <li>活动优惠:</li>
+                  <li>优惠券抵扣:</li>
+                  <li>运费:</li>
+                  <li class="total-price-title">应付总额:</li>
+                </ul>
+                <ul class="nums-list">
+                  <li>{{quantityTotal}}件</li>
+                  <li>{{productTotal}}元</li>
+                  <li>-0元</li>
+                  <li>-0元</li>
+                  <li>0元</li>
+                  <li>
+                    <span class="total-price">{{productTotal}}</span> 元
+                  </li>
+                </ul>
+              </div>
+            </section>
+          </div>
+          <!-- 底栏 -->
+          <div class="order-footer" v-if="isSelected !== 0">
+            <div class="reveiver-address">
+              <p v-show="isSelected">{{userInfo}}</p>
+              <p v-show="isSelected">
+                {{address}}
+                <span>修改</span>
+              </p>
             </div>
-          </section>
+            <div class="btn-group">
+              <span class="btn btn-back" @click="$router.push({name:'cart'})">返回购物车</span>
+              <span class="btn btn-pay" @click="toOrder">去下单</span>
+            </div>
+          </div>
         </div>
-        <!-- 底栏 -->
-        <div class="order-footer" v-if="isSelected !== 0">
-          <div class="reveiver-address">
-            <p v-show="isSelected">{{userInfo}}</p>
-            <p v-show="isSelected">
-              {{address}}
-              <span>修改</span>
-            </p>
-          </div>
-          <div class="btn-group">
-            <span class="btn btn-back" @click="$router.push({name:'cart'})">返回购物车</span>
-            <span class="btn btn-pay" @click="toOrder">去支付</span>
-          </div>
+        <!-- loading -->
+        <div class="spinner" v-show="showLoading">
+          <div class="rect1"></div>
+          <div class="rect2"></div>
+          <div class="rect3"></div>
+          <div class="rect4"></div>
+          <div class="rect5"></div>
         </div>
       </div>
     </div>
@@ -184,6 +194,7 @@ export default {
   name: "confirm-order",
   data() {
     return {
+      showLoading: true,
       modalShow: false, //是否显示modal组件
       target: 0, // modal组件动态绑定样式
       selectedProductList: [], //选中的商品
@@ -244,9 +255,18 @@ export default {
           });
         });
     },
-    getAddress() {
+    getAddress(resolve) {
       this.$axios.get("/shippings").then(res => {
         this.addressList = res.list.slice(0, 3);
+        resolve();
+      });
+    },
+    getCart(resolve) {
+      getCartList().then(res => {
+        this.selectedProductList = res.cartProductVoList.filter(item => {
+          return item.productSelected;
+        });
+        resolve();
       });
     },
     setNewAddress() {
@@ -271,12 +291,15 @@ export default {
     Modal
   },
   mounted() {
-    this.getAddress();
-    getCartList().then(res => {
-      this.selectedProductList = res.cartProductVoList.filter(item => {
-        return item.productSelected;
-      });
+    new Promise(resolve => {
+      this.getAddress(resolve);
+      this.getCart(resolve);
+    }).then(() => {
+      this.showLoading = false;
     });
+    // // this.getAddress();
+    // this.getAddress();
+    // this.getCart()
   }
 };
 </script>
@@ -290,195 +313,259 @@ export default {
     .container {
       width: 1226px;
       margin: 0 auto;
-      .order-content {
-        box-sizing: border-box;
-        padding: 48px;
-        background-color: #fff;
-        h3 {
-          font-size: 18px;
-          line-height: 40px;
-        }
-        .address-wrapper {
-          margin-bottom: 24px;
-          .address {
-            display: flex;
-            flex-wrap: wrap;
-            .addr-box {
-              box-sizing: border-box;
-              width: 268px;
-              height: 178px;
-              border: 1px solid #e0e0e0;
-              cursor: pointer;
-              &.user-address {
-                position: relative;
-                margin-right: 17px;
-                padding: 16px 24px;
-                &.selected {
-                  border-color: #ff6700;
-                }
-                .consignee {
-                  font-size: 18px;
-                  color: #333;
-                  margin-bottom: 10px;
-                }
-                p {
-                  font-size: 14px;
-                  color: #757575;
-                  line-height: 22px;
-                }
-                .btn-modify {
-                  position: absolute;
-                  right: 24px;
-                  bottom: 16px;
-                  font-size: 14px;
-                  color: #ff6700;
-                }
-              }
-              &.add-address {
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                color: #b0b0b0;
-                transition: color 0.4s, background-color 0.4s, border-color 0.4s;
-                &:hover {
-                  color: #757575;
-                  border-color: #757575;
-                  .icon-plus {
-                    background-color: #757575;
+      .order-section {
+        .order-content {
+          box-sizing: border-box;
+          padding: 48px;
+          background-color: #fff;
+          h3 {
+            font-size: 18px;
+            line-height: 40px;
+          }
+          .address-wrapper {
+            margin-bottom: 24px;
+            .address {
+              display: flex;
+              flex-wrap: wrap;
+              .addr-box {
+                box-sizing: border-box;
+                width: 268px;
+                height: 178px;
+                border: 1px solid #e0e0e0;
+                cursor: pointer;
+                &.user-address {
+                  position: relative;
+                  margin-right: 17px;
+                  padding: 16px 24px;
+                  &.selected {
+                    border-color: #ff6700;
+                  }
+                  .consignee {
+                    font-size: 18px;
+                    color: #333;
+                    margin-bottom: 10px;
+                  }
+                  p {
+                    font-size: 14px;
+                    color: #757575;
+                    line-height: 22px;
+                  }
+                  .btn-modify {
+                    position: absolute;
+                    right: 24px;
+                    bottom: 16px;
+                    font-size: 14px;
+                    color: #ff6700;
                   }
                 }
-                .icon-plus {
-                  width: 30px;
-                  height: 30px;
-                  line-height: 30px;
-                  background: #e0e0e0;
-                  border-radius: 50%;
-                  text-align: center;
-                  font-weight: bolder;
-                  color: #fff;
-                  font-size: 26px;
-                  margin-bottom: 10px;
+                &.add-address {
+                  display: flex;
+                  flex-direction: column;
+                  justify-content: center;
+                  align-items: center;
+                  color: #b0b0b0;
+                  transition: color 0.4s, background-color 0.4s,
+                    border-color 0.4s;
+                  &:hover {
+                    color: #757575;
+                    border-color: #757575;
+                    .icon-plus {
+                      background-color: #757575;
+                    }
+                  }
+                  .icon-plus {
+                    width: 30px;
+                    height: 30px;
+                    line-height: 30px;
+                    background: #e0e0e0;
+                    border-radius: 50%;
+                    text-align: center;
+                    font-weight: bolder;
+                    color: #fff;
+                    font-size: 26px;
+                    margin-bottom: 10px;
+                  }
                 }
               }
             }
           }
-        }
-        .product-wrapper {
-          .product-list {
-            border-top: 1px solid #e0e0e0;
-            border-bottom: 1px solid #e0e0e0;
-            padding: 5px 0;
-            .product-item {
-              display: flex;
-              height: 50px;
-              font-size: 14px;
-              color: #424242;
-              .col {
+          .product-wrapper {
+            .product-list {
+              border-top: 1px solid #e0e0e0;
+              border-bottom: 1px solid #e0e0e0;
+              padding: 5px 0;
+              .product-item {
                 display: flex;
-                justify-content: center;
-                align-items: center;
-              }
-              .col-img {
-                width: 30px;
-                margin-right: 10px;
-                img {
+                height: 50px;
+                font-size: 14px;
+                color: #424242;
+                .col {
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                }
+                .col-img {
                   width: 30px;
+                  margin-right: 10px;
+                  img {
+                    width: 30px;
+                  }
+                }
+                .col-name {
+                  justify-content: flex-start;
+                  width: 650px;
+                  a {
+                    color: #424242;
+                  }
+                }
+                .col-price {
+                  width: 150px;
+                }
+                .col-total {
+                  width: 230px;
+                  color: #ff6700;
+                  padding-left: 60px;
                 }
               }
-              .col-name {
-                justify-content: flex-start;
-                width: 650px;
-                a {
-                  color: #424242;
+            }
+          }
+          .dilivery-ways {
+            height: 90px;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            align-items: center;
+            .ways {
+              color: #ff6700;
+              margin-left: 70px;
+            }
+          }
+          .order-views-wrapper {
+            padding-top: 30px;
+            display: flex;
+            justify-content: space-between;
+            .right {
+              display: flex;
+              text-align: right;
+              font-size: 14px;
+              color: #757575;
+              line-height: 2;
+              .title-list {
+                width: 126px;
+                margin-right: 25px;
+                & .total-price-title {
+                  padding-top: 20px;
                 }
               }
-              .col-price {
-                width: 150px;
-              }
-              .col-total {
-                width: 230px;
+              .nums-list {
                 color: #ff6700;
-                padding-left: 60px;
+                & .total-price {
+                  font-size: 30px;
+                }
               }
             }
           }
         }
-        .dilivery-ways {
-          height: 90px;
-          border-bottom: 1px solid #e0e0e0;
-          display: flex;
-          align-items: center;
-          .ways {
-            color: #ff6700;
-            margin-left: 70px;
-          }
-        }
-        .order-views-wrapper {
-          padding-top: 30px;
+        .order-footer {
           display: flex;
           justify-content: space-between;
-          .right {
-            display: flex;
-            text-align: right;
+          border-top: 2px solid #f5f5f5;
+          padding: 20px 48px;
+          background-color: #fff;
+          .reveiver-address {
             font-size: 14px;
-            color: #757575;
-            line-height: 2;
-            .title-list {
-              width: 126px;
-              margin-right: 25px;
-              & .total-price-title {
-                padding-top: 20px;
-              }
-            }
-            .nums-list {
+            color: #424242;
+            line-height: 21px;
+            span {
+              cursor: pointer;
               color: #ff6700;
-              & .total-price {
-                font-size: 30px;
+            }
+          }
+          .btn {
+            margin-left: 30px;
+            display: inline-block;
+            width: 160px;
+            height: 40px;
+            font-size: 14px;
+            line-height: 40px;
+            text-align: center;
+            border: 1px solid #b0b0b0;
+            cursor: pointer;
+            &.btn-back {
+              color: rgba(0, 0, 0, 0.27);
+              border-color: rgba(0, 0, 0, 0.27);
+            }
+            &.btn-pay {
+              background: #ff6700;
+              border-color: #ff6700;
+              color: #fff;
+              transition: all 0.4s;
+              &:hover {
+                background-color: #f25807;
+                border-color: #f25807;
               }
             }
           }
         }
       }
-      .order-footer {
-        display: flex;
-        justify-content: space-between;
-        border-top: 2px solid #f5f5f5;
-        padding: 20px 48px;
-        background-color: #fff;
-        .reveiver-address {
-          font-size: 14px;
-          color: #424242;
-          line-height: 21px;
-          span {
-            cursor: pointer;
-            color: #ff6700;
-          }
+      // 加载动画
+      .spinner {
+        width: 1226px;
+        margin: 17px auto;
+        height: 25px;
+        text-align: center;
+        font-size: 10px;
+      }
+
+      .spinner > div {
+        background-color: #ff6700;
+        height: 100%;
+        width: 4px;
+        display: inline-block;
+        margin: 2px;
+        -webkit-animation: sk-stretchdelay 1.1s infinite ease-in-out;
+        animation: sk-stretchdelay 1.1s infinite ease-in-out;
+      }
+      .spinner .rect2 {
+        -webkit-animation-delay: -1.1s;
+        animation-delay: -1.1s;
+      }
+
+      .spinner .rect3 {
+        -webkit-animation-delay: -1s;
+        animation-delay: -1s;
+      }
+
+      .spinner .rect4 {
+        -webkit-animation-delay: -0.9s;
+        animation-delay: -0.9s;
+      }
+
+      .spinner .rect5 {
+        -webkit-animation-delay: -0.8s;
+        animation-delay: -0.8s;
+      }
+
+      @-webkit-keyframes sk-stretchdelay {
+        0%,
+        40%,
+        100% {
+          -webkit-transform: scaleY(0.4);
         }
-        .btn {
-          margin-left: 30px;
-          display: inline-block;
-          width: 160px;
-          height: 40px;
-          font-size: 14px;
-          line-height: 40px;
-          text-align: center;
-          border: 1px solid #b0b0b0;
-          cursor: pointer;
-          &.btn-back {
-            color: rgba(0, 0, 0, 0.27);
-            border-color: rgba(0, 0, 0, 0.27);
-          }
-          &.btn-pay {
-            background: #ff6700;
-            border-color: #ff6700;
-            color: #fff;
-            transition: all 0.4s;
-            &:hover {
-              background-color: #f25807;
-              border-color: #f25807;
-            }
-          }
+        20% {
+          -webkit-transform: scaleY(1);
+        }
+      }
+
+      @keyframes sk-stretchdelay {
+        0%,
+        40%,
+        100% {
+          transform: scaleY(0.4);
+          -webkit-transform: scaleY(0.4);
+        }
+        20% {
+          transform: scaleY(1);
+          -webkit-transform: scaleY(1);
         }
       }
     }

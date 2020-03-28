@@ -1,18 +1,20 @@
 <template>
-  <div class="toast" v-if="isShow">
-    <div class="mask"></div>
-    <div class="dialog">
-      <div class="dialog-header">
-        <span class="iconfont icon-close" @click="isShow = false"></span>
-      </div>
-      <div class="dialog-body">
-        <h3>{{msg}}</h3>
-      </div>
-      <div class="dialog-footer">
-        <span class="btn-confirm" @click="isShow = false">确定</span>
+  <transition name="slide">
+    <div class="toast" v-if="isShow">
+      <div class="mask"></div>
+      <div class="dialog">
+        <div class="dialog-header">
+          <span class="iconfont icon-close" @click="isShow = false"></span>
+        </div>
+        <div class="dialog-body">
+          <h3>{{msg}}</h3>
+        </div>
+        <div class="dialog-footer">
+          <span class="btn-confirm" @click="isShow = false">确定</span>
+        </div>
       </div>
     </div>
-  </div>
+  </transition>
 </template>
 
 <script>
@@ -40,7 +42,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .toast {
   width: 100%;
   height: 100%;
@@ -48,6 +50,7 @@ export default {
   left: 0;
   top: 0;
   z-index: 999;
+  transition: all 1s;
   .mask {
     width: 100%;
     height: 100%;
@@ -58,7 +61,7 @@ export default {
     height: 270px;
     background: #fff;
     position: fixed;
-    top:100px;
+    top: 100px;
     left: 50%;
     transform: translateX(-50%);
     .dialog-header {
@@ -99,6 +102,25 @@ export default {
         cursor: pointer;
       }
     }
+  }
+}
+// 过渡动画
+.slide-enter-active,
+.slide-leave-active {
+  .mask{
+    transition: opcity .4s linear;
+  }
+  .dialog {
+    transition: top .4s ease-out;
+  }
+}
+.slide-enter,
+.slide-leave-to {
+  .mask {
+    opacity: 0;
+  }
+  .dialog {
+    top: -100%;
   }
 }
 </style>>

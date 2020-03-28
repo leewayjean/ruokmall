@@ -48,7 +48,7 @@ axios.interceptors.response.use(function (response) {
   } else if (res.status === 10) {
     window.location.href = "/#/login"
   } else {
-    Toast.show(res.msg);
+    Vue.prototype.toast.show(res.msg);
   }
   return response;
 }, function (error) {

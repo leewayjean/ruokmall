@@ -2,11 +2,8 @@
   <div class="cart">
     <order-header title="我的购物车" :tipsShow="true"></order-header>
     <div class="main-wrapper">
-      <div class="cart-empty" v-if="cartTotalQuantity === 0">
-        <h2>你的购物车还是空的!</h2>
-        <div class="btn-tobuy" @click="$router.push({name:'index'})">马上去购物</div>
-      </div>
-      <div class="cart-list" v-else>
+      <!-- 购物车 -->
+      <div class="cart-list" v-if="cartList.length > 0">
         <!-- 购物车列表头 -->
         <div class="cart-list-header">
           <div class="col col-check">
@@ -88,6 +85,19 @@
           >去结算</router-link>
         </div>
       </div>
+      <!-- 购物车为空 -->
+      <div class="cart-empty" v-show="cartList.length == 0 && showLoading == false">
+        <h2>你的购物车还是空的!</h2>
+        <div class="btn-tobuy" @click="$router.push({name:'index'})">马上去购物</div>
+      </div>
+      <!-- loading -->
+      <div class="spinner" v-show="showLoading">
+        <div class="rect1"></div>
+        <div class="rect2"></div>
+        <div class="rect3"></div>
+        <div class="rect4"></div>
+        <div class="rect5"></div>
+      </div>
     </div>
     <nav-footer></nav-footer>
   </div>
@@ -104,7 +114,8 @@ export default {
   },
   data() {
     return {
-      isEmpty:false,
+      showLoading: true,
+      isEmpty: false,
       cartList: [], //购物车商品
       cartTotalQuantity: 0, //购物车总数
       selectedAll: false, //是否全选
@@ -213,6 +224,10 @@ export default {
     getCartList()
       .then(res => {
         this.renderCart(res);
+      })
+      .then(() => {
+        // 首次加载购物车完成后关闭动画
+        this.showLoading = false;
       })
       .catch(err => {
         alert(err);
@@ -452,6 +467,68 @@ export default {
         line-height: 50px;
         text-align: center;
         cursor: pointer;
+      }
+    }
+
+    // 加载动画
+    .spinner {
+      width: 1226px;
+      margin: 17px auto;
+      height: 25px;
+      text-align: center;
+      font-size: 10px;
+    }
+
+    .spinner > div {
+      background-color: #ff6700;
+      height: 100%;
+      width: 4px;
+      display: inline-block;
+      margin: 2px;
+      -webkit-animation: sk-stretchdelay 1.1s infinite ease-in-out;
+      animation: sk-stretchdelay 1.1s infinite ease-in-out;
+    }
+    .spinner .rect2 {
+      -webkit-animation-delay: -1.1s;
+      animation-delay: -1.1s;
+    }
+
+    .spinner .rect3 {
+      -webkit-animation-delay: -1s;
+      animation-delay: -1s;
+    }
+
+    .spinner .rect4 {
+      -webkit-animation-delay: -0.9s;
+      animation-delay: -0.9s;
+    }
+
+    .spinner .rect5 {
+      -webkit-animation-delay: -0.8s;
+      animation-delay: -0.8s;
+    }
+
+    @-webkit-keyframes sk-stretchdelay {
+      0%,
+      40%,
+      100% {
+        -webkit-transform: scaleY(0.4);
+      }
+      20% {
+        -webkit-transform: scaleY(1);
+      }
+    }
+
+    @keyframes sk-stretchdelay {
+      0%,
+      40%,
+      100% {
+        transform: scaleY(0.4);
+        -webkit-transform: scaleY(0.4);
+      }
+      20% {
+        transform: scaleY(1);
+        -webkit-transform: scaleY(1);
       }
     }
   }

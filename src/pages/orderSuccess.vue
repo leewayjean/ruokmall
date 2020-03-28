@@ -19,21 +19,28 @@
                 <span class="total">{{order.payment}}</span>
                 <span class="unit">元</span>
               </p>
-              <p class="btn-more" @click="showMore = !showMore">订单详情 <span class="iconfont icon-arrow"></span></p>
+              <p class="btn-more" @click="showMore = !showMore">
+                订单详情
+                <span class="iconfont icon-arrow"></span>
+              </p>
             </div>
           </div>
           <div class="detail" v-if="showMore">
             <ul class="order-views">
               <li>
                 <span class="title">订单号:</span>
-                {{order.orderNo}}
+                <span class="order-No">{{order.orderNo}}</span>
               </li>
               <li>
                 <span class="title">收货信息:</span>
                 {{address}}
               </li>
               <li>
-                <span class="title">商品名称:</span> <span v-for="(item,index) in order.orderItemVoList" :key="index">{{item.productName}}</span>
+                <span class="title">商品名称:</span>
+                <span
+                  v-for="(item,index) in order.orderItemVoList"
+                  :key="index"
+                >{{item.productName}}</span>
               </li>
               <li>
                 <span class="title">发票信息:</span>电子发票 个人
@@ -42,7 +49,29 @@
           </div>
         </div>
       </div>
-      <div class="pay-ways"></div>
+      <div class="payment-section">
+        <div class="payment-header">选择以下支付方式付款</div>
+        <p class="title">支付平台</p>
+        <div class="payment-body">
+          <ul class="payment-list">
+            <li>
+              <a href>
+                <img src="/imgs/payment/payOnline_zfb.png" alt />
+              </a>
+            </li>
+            <li>
+              <a href>
+                <img src="/imgs/payment/weixinpay.png" alt />
+              </a>
+            </li>
+            <li>
+              <a href>
+                <img src="/imgs/payment/unionpay.png" alt />
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
     <nav-footer></nav-footer>
   </div>
@@ -70,7 +99,7 @@ export default {
         receiverAddress
       } = this.order.shippingVo;
       return `${receiverName} ${receiverMobile} ${receiverProvince} ${receiverCity} ${receiverDistrict} ${receiverAddress}`;
-    },
+    }
   },
   methods: {
     getOrderInfo() {
@@ -167,10 +196,49 @@ export default {
             line-height: 24px;
             li {
               margin-bottom: 8px;
+              .order-No {
+                color: #ff6700;
+              }
               span {
                 display: inline-block;
                 width: 84px;
               }
+            }
+          }
+        }
+      }
+    }
+    .payment-section {
+      background: #fff;
+      margin: 30px 0;
+      padding: 30px 48px;
+      .payment-header {
+        font-size: 18px;
+        color: #424242;
+        /* margin-bottom: 30px; */
+        height: 50px;
+        margin-bottom: 30px;
+        border-bottom: 1px solid #e0e0e0;
+      }
+      .title {
+        font-weight: bold;
+        font-size: 16px;
+        color: #616161;
+      }
+      .payment-body {
+        .payment-list {
+            padding: 8px 0;
+          display: flex;
+          li {
+            width: 174px;
+            height: 60px;
+            border: 1px solid #e0e0e0;
+            cursor: pointer;
+            transition: border .4s;
+            overflow: hidden;
+            margin-right: 8px;
+            &:hover{
+                border-color: #ff6700;
             }
           }
         }

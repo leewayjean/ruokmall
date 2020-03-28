@@ -24,9 +24,9 @@
           <div class="swiper-box">
             <swiper :options="swiperOption">
               <swiper-slide v-for="(slide, index) in swiperSlides" :key="index">
-                <router-link :to="'/product/'+slide.id">
+                <a :href="'/#/product/'+slide.id" target="__blank">
                   <img :src="slide.img" alt />
-                </router-link>
+                </a>
               </swiper-slide>
               <div class="swiper-pagination" slot="pagination"></div>
               <div class="swiper-btn swiper-button-prev" slot="button-prev"></div>
@@ -37,7 +37,7 @@
         <!-- 促销商品 -->
         <ul class="product-promo-list">
           <li v-for="(item,index) in promoList" :key="index">
-            <a href="javascript:;">
+            <a :href="'/#/product/'+ item.id" target="__blank">
               <img v-lazy="item.img" alt />
             </a>
           </li>
@@ -66,12 +66,12 @@
             <div class="product-list">
               <ul v-for="(phone,index) in phoneList" :key="index">
                 <li class="product-list-item" v-for="(item,index) in phone" :key="index">
-                  <router-link :to="'/product/'+item.id">
+                  <a :href="'/#/product/'+item.id" target="__blank">
                     <img v-lazy="item.mainImage" alt />
                     <p class="product-name">{{item.name}}</p>
                     <p class="product-subtitle">{{item.subtitle}}</p>
                     <p class="product-price">{{item.price}}元起</p>
-                  </router-link>
+                  </a>
                 </li>
               </ul>
             </div>
@@ -155,7 +155,7 @@ export default {
           img: "/imgs/promo/promo-3.png"
         },
         {
-          id: "",
+          id: "34",
           img: "/imgs/promo/promo-4.png"
         }
       ],
