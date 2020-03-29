@@ -9,7 +9,7 @@
         <transition name="fade">
           <div v-if="!showLoading">
             <div class="title">
-              <h2>我的订单</h2>
+              <h2>所有订单</h2>
               <p>请谨防钓鱼链接或诈骗电话</p>
             </div>
             <div class="order-list-nav">全部有效订单</div>
@@ -75,7 +75,7 @@ export default {
   mounted() {
     this.$axios.get("/orders").then(res => {
       console.log(res);
-      this.orderList = res.list;
+      this.orderList = res.list.slice(0,5);
       this.showLoading = false;
     });
   }

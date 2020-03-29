@@ -60,7 +60,7 @@
                 </li>
               </ul>
             </a>
-            <a href="/#/order/orderList" class="my-order">我的订单</a>
+            <a href="/#/order/orderList" class="my-order" target="__blank">我的订单</a>
           </span>
           <!-- 未登录显示 -->
           <span class="not-login" v-else>
