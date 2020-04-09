@@ -55,7 +55,7 @@
         <div class="payment-body">
           <ul class="payment-list">
             <li>
-              <a href>
+              <a  @click="alipayClick">
                 <img src="/imgs/payment/payOnline_zfb.png" alt />
               </a>
             </li>
@@ -84,7 +84,7 @@ export default {
   data() {
     return {
       showMore: false,
-      orderNo: this.$route.query.orderNo,
+    orderId: this.$route.query.orderNo,
       order: {}
     };
   },
@@ -103,9 +103,20 @@ export default {
   },
   methods: {
     getOrderInfo() {
-      this.$axios.get(`orders/${this.orderNo}`).then(res => {
+      this.$axios.get(`orders/${this.orderId}`).then(res => {
         this.order = res;
       });
+    },
+    alipayClick(){
+      window.open('/#/orderPay?orderId='+ this.orderId,'_blank')
+        /* this.$axios.post('/pay',{
+          orderId:this.orderId,
+          orderName:'小米商城支付',
+          amount:'0.01',
+          payType:1
+        }).then(res =>{
+          console.log(res)
+        }) */
     }
   },
   mounted() {

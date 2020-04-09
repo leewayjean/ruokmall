@@ -24,7 +24,7 @@
           <div class="swiper-box">
             <swiper :options="swiperOption">
               <swiper-slide v-for="(slide, index) in swiperSlides" :key="index">
-                <a :href="'/#/product/'+slide.id" target="__blank">
+                <a :href="'/#/product/'+slide.id" target="_blank">
                   <img :src="slide.img" alt />
                 </a>
               </swiper-slide>
@@ -37,7 +37,7 @@
         <!-- 促销商品 -->
         <ul class="product-promo-list">
           <li v-for="(item,index) in promoList" :key="index">
-            <a :href="'/#/product/'+ item.id" target="__blank">
+            <a :href="'/#/product/'+ item.id" target="_blank">
               <img v-lazy="item.img" alt />
             </a>
           </li>
@@ -66,7 +66,7 @@
             <div class="product-list">
               <ul v-for="(phone,index) in phoneList" :key="index">
                 <li class="product-list-item" v-for="(item,index) in phone" :key="index">
-                  <a :href="'/#/product/'+item.id" target="__blank">
+                  <a :href="'/#/product/'+item.id" target="_blank">
                     <img v-lazy="item.mainImage" alt />
                     <p class="product-name">{{item.name}}</p>
                     <p class="product-subtitle">{{item.subtitle}}</p>

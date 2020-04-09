@@ -53,9 +53,9 @@ const router = new VueRouter({
                     component: Detail
                 },
                 {
-                    path:'addCartSuccess/:id',
-                    name:'addCartSuccess',
-                    component:addCartSuccess
+                    path: 'addCartSuccess/:id',
+                    name: 'addCartSuccess',
+                    component: addCartSuccess
                 },
             ]
         },
@@ -64,7 +64,7 @@ const router = new VueRouter({
             path: '/order',
             name: 'order',
             component: Order,
-            redirect:'orderComfirm',
+            redirect: 'orderComfirm',
             children: [
                 {
                     path: 'orderComfirm',
@@ -72,41 +72,44 @@ const router = new VueRouter({
                     component: OrderComfirm
                 },
                 {
-                    path:'orderSuccess',
-                    name:'orderSuccess',
-                    component:OrderSuccess,
+                    path: 'orderSuccess',
+                    name: 'orderSuccess',
+                    component: OrderSuccess,
                 },
                 {
                     path: 'orderList',
                     name: 'orderList',
                     component: OrderList
                 },
-                {
-                    path: 'orderPay',
-                    name: 'orderPay',
-                    component: OrderPay
-                }
 
             ]
         },
         // 购物车
         {
-            path:'/cart',
-            name:'cart',
-            component:Cart
+            path: '/cart',
+            name: 'cart',
+            component: Cart
         },
         // 登录
         {
-            path:'/login',
-            name:'login',
-            component:Login 
+            path: '/login',
+            name: 'login',
+            component: Login
         },
         // 注册
         {
-            path:'/register',
-            name:'register',
-            component:Register 
+            path: '/register',
+            name: 'register',
+            component: Register
+        },
+        {
+            path: '/orderPay',
+            name: 'orderPay',
+            component: OrderPay
         }
-    ]
+    ], 
+    scrollBehavior() {
+        return { x: 0, y: 0 }
+    }
 })
 export default router

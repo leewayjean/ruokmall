@@ -1,14 +1,32 @@
 <template>
     <div class="order-pay">
-        <order-header title="订单支付"></order-header>
+        <div v-html="content" ></div>
     </div>
 </template>
 <script>
-import OrderHeader from '../components/OrderHeader'
 export default {
     name:'order-pay',
+    data(){
+        return{
+            orderId:this.$route.query.orderId,
+            content:''
+        }
+    },
     components:{
-        OrderHeader
+      
+    },
+    mounted(){
+         this.$axios.post('/pay',{
+          orderId:this.orderId,
+          orderName:'小米商城支付',
+          amount:'0.01',
+          payType:1
+        }).then(res =>{
+          console.log(res)
+          this.content = res.content;
+        }).then(() =>{
+            document.querySelector('form').submit();
+        })
     }
 }
 </script>

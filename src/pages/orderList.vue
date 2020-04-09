@@ -9,7 +9,7 @@
         <transition name="fade">
           <div v-if="!showLoading">
             <div class="title">
-              <h2>所有订单</h2>
+              <h2>所有订单(仅显示最近5个订单)</h2>
               <p>请谨防钓鱼链接或诈骗电话</p>
             </div>
             <div class="order-list-nav">全部有效订单</div>
@@ -26,8 +26,10 @@
                     <span class="split">|</span>
                     <span>{{item.paymentTypeDesc}}</span>
                   </div>
-                  <div>应付金额:{{item.payment}}</div>
-                  <div class="total-price"></div>
+                  <div class="total-price">
+                    应付金额:
+                    <span class="num">{{item.payment}}</span>元
+                  </div>
                 </div>
               </div>
               <div class="order-product-list">
@@ -75,7 +77,7 @@ export default {
   mounted() {
     this.$axios.get("/orders").then(res => {
       console.log(res);
-      this.orderList = res.list.slice(0,5);
+      this.orderList = res.list.slice(0, 5);
       this.showLoading = false;
     });
   }
@@ -140,6 +142,13 @@ export default {
           .split {
             margin: 0 3.5px;
           }
+          .total-price {
+            line-height: 0;
+            .num {
+              font-size: 28px;
+              color: #333;
+            }
+          }
         }
       }
       .order-product-list {
@@ -169,12 +178,12 @@ export default {
         }
         .product-item {
           display: flex;
+          min-height: 100px;
           margin: 10px 0;
           font-size: 14px;
           color: #333;
           img {
             width: 80px;
-            height: 80px;
             margin-right: 40px;
           }
           .product-name {
